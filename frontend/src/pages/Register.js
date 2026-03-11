@@ -1,8 +1,11 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "./css/Style.css";
 
 function Register() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   async function handleRegister() {
     try {
@@ -19,7 +22,14 @@ function Register() {
 
       const data = await res.json();
       console.log(data);
-      alert("Register request sent. Check console.");
+
+      if (res.ok) {
+        alert("Account created successfully!");
+        navigate("/login");
+      } else {
+        alert(data.message || "Registration failed");
+      }
+
     } catch (error) {
       console.error("Register error:", error);
       alert("Something went wrong.");
@@ -27,30 +37,45 @@ function Register() {
   }
 
   return (
-    <div>
-      <h1>Register Page</h1>
+    <div className="login-container">
 
-      <input
-        type="text"
-        placeholder="Enter username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-      />
+      <div className="login-card">
 
-      <br />
-      <br />
+        <h1 className="login-title">Create Account</h1>
+        <p className="login-sub">Join us today</p>
 
-      <input
-        type="password"
-        placeholder="Enter password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
+        <input
+          className="login-input"
+          type="text"
+          placeholder="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
 
-      <br />
-      <br />
+        <input
+          className="login-input"
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
 
-      <button onClick={handleRegister}>Register</button>
+        <button className="login-btn" onClick={handleRegister}>
+          Register
+        </button>
+
+        <p className="register-text">
+          Already have an account?{" "}
+          <span
+            className="register-link"
+            onClick={() => navigate("/login")}
+          >
+            Login
+          </span>
+        </p>
+
+      </div>
+
     </div>
   );
 }

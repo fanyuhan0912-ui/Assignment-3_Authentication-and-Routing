@@ -1,6 +1,7 @@
 import { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import "./css/Style.css";
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -22,46 +23,57 @@ function Login() {
       });
 
       const data = await res.json();
-      console.log(data);
 
       if (data.token) {
         login(data.token);
-        alert("Login successful");
         navigate("/dashboard");
       } else {
         alert(data.message || "Login failed");
       }
+
     } catch (error) {
-      console.error("Login error:", error);
+      console.error(error);
       alert("Something went wrong.");
     }
   }
 
   return (
-    <div>
-      <h1>Login Page</h1>
+    <div className="login-container">
 
-      <input
-        type="text"
-        placeholder="Enter username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-      />
+      <div className="login-card">
 
-      <br />
-      <br />
+        <h1 className="login-title">Welcome Back</h1>
+        <p className="login-sub">We miss you</p>
 
-      <input
-        type="password"
-        placeholder="Enter password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
+        <input
+          className="login-input"
+          type="text"
+          placeholder="Username"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
 
-      <br />
-      <br />
+        <input
+          className="login-input"
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
 
-      <button onClick={handleLogin}>Login</button>
+        <button className="login-btn" onClick={handleLogin}>
+          Sign In
+        </button>
+
+        <p className="register-text">
+          Don't have an account?{" "}
+          <span onClick={() => navigate("/register")} className="register-link">
+            Sign Up
+          </span>
+        </p>
+
+      </div>
+
     </div>
   );
 }
