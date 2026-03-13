@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./css/Dashboard.css";
 
@@ -6,61 +6,43 @@ function VisitorDashboard() {
   const navigate = useNavigate();
 
   const [search, setSearch] = useState("");
-  const [selectedType, setSelectedType] = useState("All");
+  const [items, setItems] = useState([]);
 
-  const demoPets = [
-    {
-      id: 500,
-      name: "Sky",
-      type: "Bird",
-      image: "https://i.pinimg.com/1200x/7b/18/6b/7b186b820267265d55cf3e306128b9b6.jpg",
-    },
-    {
-      id: 501,
-      name: "Hazel",
-      type: "Rabbit",
-      image: "https://i.pinimg.com/736x/43/05/c3/4305c3a38250f24c315f420a7a422334.jpg",
-    },
-    {
-      id: 502,
-      name: "Buddy",
-      type: "Dog",
-      image: "https://i.pinimg.com/736x/c3/e0/86/c3e0860f8f8f2682d45fc93cf832aaa3.jpg",
-    },
-    {
-      id: 503,
-      name: "Sunny",
-      type: "Bird",
-      image: "https://i.pinimg.com/1200x/57/66/5a/57665ae87080aacfab1056ea1591e6c7.jpg",
-    },
-    {
-      id: 504,
-      name: "Coco",
-      type: "Rabbit",
-      image: "https://i.pinimg.com/736x/43/05/c3/4305c3a38250f24c315f420a7a422334.jpg",
-    },
-  ];
+  useEffect(() => {
+    console.log("VisitorDashboard mounted");
+    fetch("http://localhost:5000/api/items")
+      .then((res) => {
+        console.log("fetch status:", res.status);
+        return res.json();
+      })
+      .then((data) => {
+        console.log("fetched data:", data);
+        if (Array.isArray(data)) {
+          setItems(data);
+        } else {
+          setItems([]);
+        }
+      })
+      .catch((err) => {
+        console.error("fetch error:", err);
+        setItems([]);
+      });
+  }, []);
 
-  const filteredPets = useMemo(() => {
-    return demoPets.filter((pet) => {
-      const matchesSearch =
-        pet.name.toLowerCase().includes(search.toLowerCase()) ||
-        pet.type.toLowerCase().includes(search.toLowerCase());
+  const filteredItems = useMemo(() => {
+    return items.filter((item) => {
+      const title = item.title ? item.title.toLowerCase() : "";
+      const description = item.description ? item.description.toLowerCase() : "";
+      const keyword = search.toLowerCase();
 
-      const matchesType =
-        selectedType === "All" || pet.type === selectedType;
-
-      return matchesSearch && matchesType;
+      return title.includes(keyword) || description.includes(keyword);
     });
-  }, [search, selectedType]);
+  }, [items, search]);
 
   return (
     <div className="dashboard">
-
-      {/* HEADER */}
       <div className="dashboard-header">
-
-        <h1>Meet Your Pet</h1>
+        <h1>Item Listing</h1>
 
         <div>
           <button
@@ -78,66 +60,31 @@ function VisitorDashboard() {
             Register
           </button>
         </div>
-
       </div>
 
-      <h2 className="pet-title">PET LISTING</h2>
+      <h2 className="pet-title">DATABASE ITEMS</h2>
 
       <div className="dashboard-layout">
-
-        {/* SIDEBAR */}
         <div className="sidebar">
-
           <h3 className="sidebar-title">SEARCH</h3>
-
           <input
             className="search-input"
             type="text"
-            placeholder="Search pets..."
+            placeholder="Search items..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
           />
-
-          <h3 className="sidebar-title">FILTER (TYPE)</h3>
-
-          <select
-            className="filter-select"
-            value={selectedType}
-            onChange={(e) => setSelectedType(e.target.value)}
-          >
-            <option value="All">All</option>
-            <option value="Bird">Bird</option>
-            <option value="Rabbit">Rabbit</option>
-            <option value="Dog">Dog</option>
-          </select>
-
         </div>
 
-        {/* PET GRID */}
         <div className="pet-grid">
-
-          {filteredPets.map((pet) => (
-
-            <div className="pet-card" key={pet.id}>
-
-              <img
-                className="pet-image"
-                src={pet.image}
-                alt={pet.name}
-              />
-
-              <h3>{pet.name}</h3>
-
-              <p className="pet-type">{pet.type}</p>
-
+          {filteredItems.map((item) => (
+            <div className="pet-card" key={item._id}>
+              <h3>{item.title}</h3>
+              <p className="pet-type">{item.description}</p>
             </div>
-
           ))}
-
         </div>
-
       </div>
-
     </div>
   );
 }

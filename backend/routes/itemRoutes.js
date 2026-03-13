@@ -4,10 +4,10 @@ const verifyToken = require("../middleware/verifyToken");
 
 const router = express.Router();
 
-// get all items for logged in user
-router.get("/", verifyToken, async (req, res) => {
+// get all items for visitor / public view
+router.get("/", async (req, res) => {
   try {
-    const items = await Item.find({ userId: req.user.userId });
+    const items = await Item.find();
     res.json(items);
   } catch (error) {
     res.status(500).json({ message: "Server error" });
