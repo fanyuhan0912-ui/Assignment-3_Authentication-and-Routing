@@ -6,20 +6,24 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const authRoutes = require("./routes/authRoutes");
-const itemRoutes = require("./routes/itemRoutes");
+const petRoutes = require("./routes/petRoutes");
+const registrationRoutes = require("./routes/registrationRoutes");
+const seedPets = require("./utils/seedPets");
 
 const app = express();
 
 app.use(cors());
-app.use(express.json());
+app.use(express.json({ limit: "12mb" }));
 
 app.use("/api/auth", authRoutes);
-app.use("/api/items", itemRoutes);
+app.use("/api/pets", petRoutes);
+app.use("/api/registrations", registrationRoutes);
 
 mongoose
   .connect(process.env.MONGO_URI)
-  .then(() => {
+  .then(async () => {
     console.log("MongoDB connected");
+    await seedPets();
 
     app.listen(process.env.PORT, () => {
       console.log(`Server running on port ${process.env.PORT}`);

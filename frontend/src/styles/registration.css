@@ -1,0 +1,258 @@
+/* Registration page and form styling */
+.registration-page {
+  max-width: 70rem;
+  margin: 0 auto;
+}
+
+.registration-subtitle {
+  margin: 0;
+  color: #73829a;
+  font-size: 14px;
+}
+
+.registration-switch {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  max-width: 36rem;
+  margin: 0 auto 2rem;
+  border: 1px solid #7ea6d8;
+  border-radius: 1rem;
+  overflow: hidden;
+  background: #fff;
+}
+
+.registration-tab {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  border: none;
+  background: transparent;
+  color: #6f92c5;
+  padding: 0.9rem 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.registration-tab img {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.registration-tab.is-active {
+  background: #6f99d2;
+  color: #fff;
+}
+
+.registration-card {
+  border: 1px solid #9bbce6;
+  border-radius: 1rem;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.97);
+  box-shadow: 0 16px 32px rgba(122, 150, 191, 0.08);
+}
+
+.registration-card-header {
+  margin-bottom: 1.5rem;
+}
+
+.registration-card-header h2 {
+  margin: 0 0 0.5rem;
+  color: #7398d3;
+  font-size: 2rem;
+}
+
+.registration-card-header p {
+  margin: 0;
+  color: #6e7b8d;
+  font-size: 14px;
+}
+
+.registration-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem 1.25rem;
+}
+
+.registration-field {
+  display: grid;
+  gap: 0.5rem;
+  grid-column: 1 / -1;
+}
+
+.registration-field-half {
+  grid-column: span 1;
+}
+
+.registration-field-full {
+  grid-column: 1 / -1;
+}
+
+.registration-field span {
+  color: #4a617f;
+  font-weight: 600;
+}
+
+.registration-field input,
+.registration-field textarea {
+  width: 100%;
+  border: 1px solid #9cbbe6;
+  border-radius: 0.5rem;
+  padding: 0.875rem 1rem;
+  background: #fff;
+}
+
+.registration-field input[type="file"] {
+  padding: 0.65rem 0.85rem;
+}
+
+.registration-feedback {
+  grid-column: 1 / -1;
+  margin: 0;
+  font-weight: 600;
+}
+
+.registration-feedback.is-error {
+  color: #c45454;
+}
+
+.registration-feedback.is-success {
+  color: #4a7a54;
+}
+
+.registration-actions {
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.registration-history-preview {
+  margin-top: 2rem;
+}
+
+.registration-history-head {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.registration-history-head img {
+  width: 4.5rem;
+  height: auto;
+}
+
+.registration-history-head h3 {
+  margin: 0 0 0.35rem;
+  color: #3d5f97;
+}
+
+.registration-history-head p {
+  margin: 0;
+  color: #728096;
+}
+
+.registration-history-list {
+  display: grid;
+  gap: 0.875rem;
+  margin-bottom: 1rem;
+}
+
+.registration-history-item {
+  display: grid;
+  gap: 0.35rem;
+  padding: 0.875rem 1rem;
+  border: 1px solid #d8e3f3;
+  border-radius: 0.875rem;
+  background: #fff;
+}
+
+/* Registration success page */
+.registration-success-page {
+  min-height: calc(100vh - 10rem);
+  padding: 4rem 6vw 6rem;
+  background:
+    radial-gradient(circle at top left, rgba(185, 211, 245, 0.38), transparent 30%),
+    #ffffff;
+}
+
+.registration-success-card {
+  display: grid;
+  grid-template-columns: minmax(20rem, 1.1fr) minmax(14rem, 0.9fr);
+  align-items: start;
+  gap: 2rem;
+  max-width: 72rem;
+  margin: 0 auto;
+  padding-left: 8rem;
+}
+
+.registration-success-copy {
+  position: relative;
+  padding-top: 6rem;
+  max-width: 38rem;
+  text-align: left;
+}
+
+.registration-success-kicker {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0 0 1.5rem;
+  color: #5c6f89;
+  font-size: 1.05rem;
+}
+
+.registration-success-check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 999px;
+  background: #7aa0da;
+  color: #fff;
+  font-weight: 700;
+}
+
+.registration-success-copy h1 {
+  margin: 0 0 1.5rem;
+  color: #7097d3;
+  font-size: clamp(3rem, 6vw, 4.75rem);
+  line-height: 0.95;
+  letter-spacing: 0.02em;
+}
+
+.registration-success-text {
+  max-width: 34rem;
+  margin: 0 0 1.5rem;
+  color: #334766;
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.7;
+}
+
+.registration-success-note {
+  margin: 0 0 2.25rem;
+  color: #4c5e74;
+  font-size: 1rem;
+}
+
+.registration-success-art {
+  position: relative;
+  min-height: 28rem;
+}
+
+.registration-success-dog-image {
+  position: absolute;
+  top: 5rem;
+  left: 2rem;
+  width: 11rem;
+  height: auto;
+}
+
+.registration-success-dots {
+  display: none;
+}

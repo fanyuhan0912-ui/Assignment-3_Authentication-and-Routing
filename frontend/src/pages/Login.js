@@ -1,13 +1,14 @@
 import { useState, useContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
-import "./css/Style.css";
 
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
+  const location = useLocation();
+  const redirectPath = location.state?.from?.pathname || "/";
 
   async function handleLogin() {
     try {
@@ -26,7 +27,7 @@ function Login() {
 
       if (data.token) {
         login(data.token);
-        navigate("/dashboard");
+        navigate(redirectPath, { replace: true });
       } else {
         alert(data.message || "Login failed");
       }
