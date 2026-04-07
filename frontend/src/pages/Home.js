@@ -182,15 +182,17 @@ function Home() {
                   <article className="pet-list-card" key={pet._id}>
                     <div className="pet-list-image-wrap">
                       <img className="pet-card-image" src={pet.image} alt={pet.name} />
-                      <button
-                        className={`pet-favorite-badge ${
-                          isAuthenticated && isPetSaved(pet._id) ? "is-saved" : ""
-                        }`}
-                        type="button"
-                        onClick={() => isAuthenticated && toggleSavedPet(pet)}
-                      >
-                        {"\u2665"}
-                      </button>
+                      {isAuthenticated ? (
+                        <button
+                          className={`pet-favorite-badge ${
+                            isPetSaved(pet._id) ? "is-saved" : ""
+                          }`}
+                          type="button"
+                          onClick={() => toggleSavedPet(pet)}
+                        >
+                          {"\u2665"}
+                        </button>
+                      ) : null}
                     </div>
 
                     <div className="pet-list-card-body">
@@ -209,7 +211,7 @@ function Home() {
                           {pet.status}
                         </span>
 
-                        {isAuthenticated && pet.status !== "Adopted" ? (
+                        {pet.status !== "Adopted" ? (
                           <button
                             className="pet-outline-button"
                             type="button"
@@ -221,7 +223,7 @@ function Home() {
                               )
                             }
                           >
-                            Invite
+                            View More
                           </button>
                         ) : null}
                       </div>

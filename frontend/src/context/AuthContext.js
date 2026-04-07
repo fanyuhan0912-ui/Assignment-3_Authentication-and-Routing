@@ -38,6 +38,19 @@ export function AuthProvider({ children }) {
   );
   const [registrations, setRegistrations] = useState([]);
 
+  function logout() {
+    localStorage.removeItem("token");
+    setToken(null);
+    setUser(null);
+    setProfile({
+      displayName: "",
+      profileImage: defaultProfileImage,
+      signInDate: null,
+    });
+    setSavedPets([]);
+    setRegistrations([]);
+  }
+
   useEffect(() => {
     async function loadCurrentUser() {
       if (!token) {
@@ -61,6 +74,10 @@ export function AuthProvider({ children }) {
         ]);
 
         if (!userResponse.ok || !registrationsResponse.ok) {
+          if (userResponse.status === 401 || userResponse.status === 403) {
+            logout();
+            return;
+          }
           throw new Error("Failed to load user data");
         }
 
@@ -77,13 +94,7 @@ export function AuthProvider({ children }) {
         setSavedPets(Array.isArray(userData.user?.savedPets) ? userData.user.savedPets : []);
         setRegistrations(Array.isArray(registrationData) ? registrationData : []);
       } catch (error) {
-        setProfile({
-          displayName: storedUser?.username || "",
-          profileImage: defaultProfileImage,
-          signInDate: null,
-        });
-        setSavedPets([]);
-        setRegistrations([]);
+        logout();
       }
     }
 
@@ -103,19 +114,6 @@ export function AuthProvider({ children }) {
     setToken(newToken);
     setUser(decodedUser);
     setProfile(nextProfile);
-  }
-
-  function logout() {
-    localStorage.removeItem("token");
-    setToken(null);
-    setUser(null);
-    setProfile({
-      displayName: "",
-      profileImage: defaultProfileImage,
-      signInDate: null,
-    });
-    setSavedPets([]);
-    setRegistrations([]);
   }
 
   async function updateProfile(updates) {
