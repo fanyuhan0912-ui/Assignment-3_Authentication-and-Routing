@@ -1,7 +1,6 @@
 const express = require("express");
 const Pet = require("../models/Pet");
 const verifyToken = require("../middleware/verifyToken");
-
 const router = express.Router();
 
 router.get("/", async (req, res) => {
@@ -32,12 +31,31 @@ router.post("/", verifyToken, async (req, res) => {
   }
 });
 
+// GET single pet by id
+router.get("/:id", async (req, res) => {
+  try {
+    const pet = await Pet.findById(req.params.id);
+
+    if (!pet) {
+      return res.status(404).json({ message: "Pet not found" });
+    }
+
+    res.json(pet);
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
 router.delete("/:id", verifyToken, async (req, res) => {
   try {
-    await Pet.findOneAndDelete({
+    const deletedPet = await Pet.findOneAndDelete({
       _id: req.params.id,
       createdBy: req.user.userId,
     });
+
+    if (!deletedPet) {
+      return res.status(404).json({ message: "Pet not found or not authorized" });
+    }
 
     res.json({ message: "Pet deleted" });
   } catch (error) {

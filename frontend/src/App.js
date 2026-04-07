@@ -11,6 +11,9 @@ import RegistrationForm from "./pages/RegistrationForm";
 import RegistrationSuccess from "./pages/RegistrationSuccess";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+
+
+import PetDetail from "./pages/PetDetail";
 import "./styles/base.css";
 import "./styles/auth.css";
 import "./styles/layout.css";
@@ -29,6 +32,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<AboutUs />} />
           <Route path="/pet-list" element={<PetList />} />
+          <Route path="/pets/:id" element={<PetDetail />} />
 
           <Route element={<ProtectedRoute />}>
             <Route path="/saved-pets" element={<SavedPets />} />

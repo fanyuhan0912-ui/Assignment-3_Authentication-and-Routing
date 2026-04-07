@@ -133,12 +133,8 @@ function PetList() {
     return ["All", ...new Set(pets.map((pet) => pet.age))];
   }, [pets]);
 
-  function openAdoptionForm(pet) {
-    navigate(
-      `/registration-form?type=adoption&petId=${pet._id}&petName=${encodeURIComponent(
-        pet.name
-      )}`
-    );
+  function openPetDetail(pet) {
+    navigate(`/pets/${pet._id}`);
   }
 
   return (
@@ -292,13 +288,18 @@ function PetList() {
                         </span>
 
                         {isAuthenticated && pet.status !== "Adopted" ? (
-                          <button
-                            className="pet-outline-button"
-                            type="button"
-                            onClick={() => openAdoptionForm(pet)}
-                          >
-                            Invite
-                          </button>
+                        <button
+                          className={`pet-favorite-badge ${
+                            isAuthenticated && isPetSaved(pet._id) ? "is-saved" : ""
+                          }`}
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            isAuthenticated && toggleSavedPet(pet);
+                          }}
+                        >
+                          {"\u2665"}
+                        </button>
                         ) : null}
                       </div>
                     </div>

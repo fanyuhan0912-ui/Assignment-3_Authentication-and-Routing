@@ -1,7 +1,7 @@
 import { useContext, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
-import heroDog from "../assets/flouffy-g2FtlFrc164-unsplash.jpg";
+import heroDog from "../assets/flouffy-g2FtlFrc164-unsplash.jpeg";
 import adoptionIcon from "../assets/adoption-icon.png";
 import postingIcon from "../assets/posting-icon.png";
 
@@ -76,6 +76,15 @@ function Home() {
     }
 
     fetchPets();
+  }, []);
+
+  useEffect(() => {
+    if (window.location.hash === '#pet-listing') {
+      const element = document.getElementById('pet-listing');
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
   }, []);
 
   const featuredPets = useMemo(() => pets.slice(0, 6), [pets]);
@@ -163,7 +172,7 @@ function Home() {
           </div>
         </section>
 
-        <section className="home-pet-section">
+        <section className="home-pet-section" id="pet-listing">
           <div className="pet-list-heading">
             <h1>PET LISTING</h1>
             <p>
@@ -216,11 +225,7 @@ function Home() {
                             className="pet-outline-button"
                             type="button"
                             onClick={() =>
-                              navigate(
-                                `/registration-form?type=adoption&petId=${pet._id}&petName=${encodeURIComponent(
-                                  pet.name
-                                )}`
-                              )
+                              navigate(`/pets/${pet._id}`)
                             }
                           >
                             View More
