@@ -99,14 +99,42 @@
   letter-spacing: 0.18em;
 }
 
+.pet-search-input-group {
+  display: flex;
+  gap: 0.5rem;
+}
+
 .pet-filter-search {
-  width: 100%;
+  flex: 1;
   min-height: 42px;
   padding: 0 0.875rem;
   border: 1px solid #c7d8ec;
   border-radius: 0.5rem;
   background: #fff;
   color: #5a6980;
+}
+
+.pet-search-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  min-width: 42px;
+  height: 42px;
+  padding: 0;
+  border: 1px solid #c7d8ec;
+  background: #fefeff;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+
+.pet-search-button img {
+  width: 18px;
+  height: 18px;
+}
+
+.pet-search-button:hover {
+  background: #5e84bf;
 }
 
 .pet-filter-card {

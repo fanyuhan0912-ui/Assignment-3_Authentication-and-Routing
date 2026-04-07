@@ -67,6 +67,79 @@ function PetDetail() {
               borderRadius: "15px",
             }}
           />
+
+          {pet.location && pet.location.address && (() => {
+            const latitude = pet.location.latitude ?? pet.location.lat;
+            const longitude = pet.location.longitude ?? pet.location.lng;
+            const mapsQuery = latitude && longitude
+              ? `${latitude},${longitude}`
+              : encodeURIComponent(pet.location.address);
+            const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${mapsQuery}`;
+
+            return (
+              <div style={{ marginTop: "18px" }}>
+                <div
+                  style={{
+                    width: "100%",
+                    height: "180px",
+                    borderRadius: "18px",
+                    overflow: "hidden",
+                    border: "1px solid #d8e4f5",
+                    backgroundColor: "#f8fbff",
+                    boxShadow: "0 6px 18px rgba(31, 45, 82, 0.05)",
+                    marginBottom: "12px",
+                    cursor: "pointer"
+                  }}
+                  onClick={() => window.open(mapsUrl, "_blank")}
+                >
+                  {latitude && longitude ? (
+                    <iframe
+                      title="Pet location preview"
+                      src={`https://www.openstreetmap.org/export/embed.html?bbox=${longitude - 0.01},${latitude - 0.01},${longitude + 0.01},${latitude + 0.01}&layer=mapnik&marker=${latitude},${longitude}`}
+                      style={{ width: "100%", height: "100%", border: 0 }}
+                    />
+                  ) : (
+                    <div style={{
+                      width: "100%",
+                      height: "100%",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      color: "#64748b"
+                    }}>
+                      Map preview unavailable
+                    </div>
+                  )}
+                </div>
+                <button
+                  type="button"
+                  onClick={() => window.open(mapsUrl, "_blank")}
+                  style={{
+                    width: "100%",
+                    padding: "14px 18px",
+                    backgroundColor: "#eff6ff",
+                    border: "1px solid #bfdbfe",
+                    borderRadius: "14px",
+                    cursor: "pointer",
+                    textAlign: "left",
+                    color: "#2563eb",
+                    fontSize: "0.95rem",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "10px"
+                  }}
+                >
+                  <span style={{ fontSize: "18px" }}>📍</span>
+                  <span>
+                    {pet.location.address}
+                    <div style={{ fontSize: "0.82rem", color: "#475569", marginTop: "4px" }}>
+                      Open in Google Maps
+                    </div>
+                  </span>
+                </button>
+              </div>
+            );
+          })()}
         </div>
 
         {/* Right side: details */}

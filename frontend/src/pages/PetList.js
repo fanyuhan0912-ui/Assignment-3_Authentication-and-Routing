@@ -1,17 +1,45 @@
 import { useContext, useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/AuthContext";
+import searchIcon from "../assets/search.png";
 
 function normalizePetRecord(record, index) {
   const categories = ["Dog", "Cat", "Rabbit", "Bird", "Hamster"];
   const sizes = ["Small", "Medium", "Large"];
   const statuses = ["Available", "Pending", "Adopted"];
 
+  // Parse age to months
+  let ageInMonths = 0;
+  if (record.age) {
+    const ageStr = record.age.toString().toLowerCase();
+    const match = ageStr.match(/(\d+)\s*(month|year)s?/);
+    if (match) {
+      const num = parseInt(match[1]);
+      const unit = match[2];
+      ageInMonths = unit === 'year' ? num * 12 : num;
+    }
+  } else {
+    ageInMonths = (index % 5) + 1; // Default
+  }
+
+  // Determine age range
+  let ageRange;
+  if (ageInMonths < 6) {
+    ageRange = "under 6 months";
+  } else if (ageInMonths < 12) {
+    ageRange = "under 1 year";
+  } else if (ageInMonths <= 24) {
+    ageRange = "1 year ~ 2 years";
+  } else {
+    ageRange = "over 2 years";
+  }
+
   return {
     _id: record._id || `pet-${index}`,
     name: record.name || record.title || "Unknown Pet",
     category: record.category || categories[index % categories.length],
-    age: record.age || `${(index % 5) + 1} Months`,
+    age: record.age || `${ageInMonths} Months`,
+    ageRange,
     breed: record.breed || (record.category || categories[index % categories.length]),
     size: record.size || sizes[index % sizes.length],
     vaccinated: typeof record.vaccinated === "boolean" ? record.vaccinated : index % 2 === 0,
@@ -84,7 +112,7 @@ function PetList() {
         categoryFilter === "All" || pet.category === categoryFilter;
       const matchesBreed = breedFilter === "All" || pet.breed === breedFilter;
       const matchesSize = sizeFilter === "All" || pet.size === sizeFilter;
-      const matchesAge = ageFilter === "All" || pet.age === ageFilter;
+      const matchesAge = ageFilter === "All" || pet.ageRange === ageFilter;
       const matchesVaccinated = !vaccinatedOnly || pet.vaccinated;
       const matchesAvailable = !availableOnly || pet.status === "Available";
 
@@ -126,12 +154,25 @@ function PetList() {
   ]);
 
   const breedOptions = useMemo(() => {
-    return ["All", ...new Set(pets.map((pet) => pet.breed))];
-  }, [pets]);
+    if (categoryFilter === "All") {
+      return ["All", ...new Set(pets.map((pet) => pet.breed))];
+    } else {
+      const filteredBreeds = pets
+        .filter((pet) => pet.category === categoryFilter)
+        .map((pet) => pet.breed);
+      return ["All", ...new Set(filteredBreeds)];
+    }
+  }, [pets, categoryFilter]);
 
   const ageOptions = useMemo(() => {
-    return ["All", ...new Set(pets.map((pet) => pet.age))];
-  }, [pets]);
+    return [
+      "All",
+      "under 6 months",
+      "under 1 year",
+      "1 year ~ 2 years",
+      "over 2 years"
+    ];
+  }, []);
 
   function openPetDetail(pet) {
     navigate(`/pets/${pet._id}`);
@@ -153,14 +194,30 @@ function PetList() {
             <label className="pet-filter-title" htmlFor="pet-search">
               SEARCH
             </label>
-            <input
-              id="pet-search"
-              className="pet-filter-search"
-              type="text"
-              placeholder=""
-              value={search}
-              onChange={(event) => setSearch(event.target.value)}
-            />
+            <div className="pet-search-input-group">
+              <input
+                id="pet-search"
+                className="pet-filter-search"
+                type="text"
+                placeholder="Search pets by name, breed, type..."
+                value={search}
+                onChange={(event) => setSearch(event.target.value)}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter") {
+                    event.preventDefault();
+                    setSearch(search.trim());
+                  }
+                }}
+              />
+              <button
+                type="button"
+                className="pet-search-button"
+                onClick={() => setSearch(search.trim())}
+                aria-label="Search pets"
+              >
+                <img src={searchIcon} alt="Search" />
+              </button>
+            </div>
           </div>
 
           <div className="pet-filter-card">
@@ -175,12 +232,24 @@ function PetList() {
               />
             </label>
 
+            <label className="pet-check-row">
+              <span>Vaccinated</span>
+              <input
+                type="checkbox"
+                checked={vaccinatedOnly}
+                onChange={(event) => setVaccinatedOnly(event.target.checked)}
+              />
+            </label>
+
             <label className="pet-filter-field">
               <span>Type</span>
               <select
                 className="pet-select"
                 value={categoryFilter}
-                onChange={(event) => setCategoryFilter(event.target.value)}
+                onChange={(event) => {
+                  setCategoryFilter(event.target.value);
+                  setBreedFilter("All"); // Reset breed when type changes
+                }}
               >
                 <option value="All">All</option>
                 <option value="Dog">Dog</option>
@@ -234,14 +303,7 @@ function PetList() {
               </select>
             </label>
 
-            <label className="pet-check-row">
-              <span>Vaccinated</span>
-              <input
-                type="checkbox"
-                checked={vaccinatedOnly}
-                onChange={(event) => setVaccinatedOnly(event.target.checked)}
-              />
-            </label>
+          
 
             <button className="pet-filter-apply" type="button">
               Apply
@@ -260,15 +322,17 @@ function PetList() {
                   <article className="pet-list-card" key={pet._id}>
                     <div className="pet-list-image-wrap">
                       <img className="pet-card-image" src={pet.image} alt={pet.name} />
-                      <button
-                        className={`pet-favorite-badge ${
-                          isAuthenticated && isPetSaved(pet._id) ? "is-saved" : ""
-                        }`}
-                        type="button"
-                        onClick={() => isAuthenticated && toggleSavedPet(pet)}
-                      >
-                        {"\u2665"}
-                      </button>
+                      {isAuthenticated ? (
+                        <button
+                          className={`pet-favorite-badge ${
+                            isAuthenticated && isPetSaved(pet._id) ? "is-saved" : ""
+                          }`}
+                          type="button"
+                          onClick={() => isAuthenticated && toggleSavedPet(pet)}
+                        >
+                          {"\u2665"}
+                        </button>
+                      ) : null}
                     </div>
 
                     <div className="pet-list-card-body">
@@ -278,7 +342,7 @@ function PetList() {
 
                       <div className="pet-list-meta">
                         <span>{pet.category}</span>
-                        <span>{pet.age}</span>
+                        <span>{pet.ageRange}</span>
                         <span>{pet.size}</span>
                       </div>
 
@@ -287,19 +351,29 @@ function PetList() {
                           {pet.status}
                         </span>
 
-                        {isAuthenticated && pet.status !== "Adopted" ? (
-                        <button
-                          className={`pet-favorite-badge ${
-                            isAuthenticated && isPetSaved(pet._id) ? "is-saved" : ""
-                          }`}
-                          type="button"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            isAuthenticated && toggleSavedPet(pet);
-                          }}
-                        >
-                          {"\u2665"}
-                        </button>
+                        {pet.status !== "Adopted" ? (
+                          <button
+                            className="pet-outline-button"
+                            type="button"
+                            onClick={() => openPetDetail(pet)}
+                          >
+                            View More
+                          </button>
+                        ) : null}
+
+                        {isAuthenticated ? (
+                          <button
+                            className={`pet-favorite-badge ${
+                              isAuthenticated && isPetSaved(pet._id) ? "is-saved" : ""
+                            }`}
+                            type="button"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              isAuthenticated && toggleSavedPet(pet);
+                            }}
+                          >
+                            {"\u2665"}
+                          </button>
                         ) : null}
                       </div>
                     </div>

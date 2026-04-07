@@ -34,17 +34,17 @@ function SavedPets() {
                 </div>
                 <div className="pet-list-meta">
                   <span>{pet.category}</span>
-                  <span>{pet.age}</span>
+                  <span>{pet.ageRange}</span>
                   <span>{pet.size || "Small"}</span>
                 </div>
                 <p className="saved-pet-description">{pet.description}</p>
                 <div className="pet-list-card-footer">
-                  <span className="pet-status-badge status-available">Favorite</span>
                   <button
-                    className="pet-outline-button"
+                    className="pet-favorite-badge is-saved"
+                    type="button"
                     onClick={() => toggleSavedPet(pet)}
                   >
-                    Remove Favorite
+                    {"\u2665"}
                   </button>
                 </div>
               </div>

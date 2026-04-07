@@ -9,6 +9,11 @@ const PetList = [
     status: "Available",
     description: "A playful golden retriever who loves toy elephants and long walks.",
     image: "https://images.unsplash.com/photo-1517849845537-4d257902454a?auto=format&fit=crop&w=1200&q=80",
+    location: {
+      address: "Central Park, New York, NY",
+      latitude: 40.7829,
+      longitude: -73.9654,
+    },
   },
   {
     name: "Milo",
@@ -20,6 +25,11 @@ const PetList = [
     status: "Available",
     description: "A curious indoor cat who likes sunny windows and soft blankets.",
     image: "https://images.unsplash.com/photo-1511044568932-338cba0ad803?auto=format&fit=crop&w=900&q=80",
+    location: {
+      address: "Brooklyn Bridge, Brooklyn, NY",
+      latitude: 40.7061,
+      longitude: -73.9969,
+    },
   },
   {
     name: "Coco",
@@ -31,6 +41,11 @@ const PetList = [
     status: "Pending",
     description: "A gentle rabbit with a calm personality and a love for carrots.",
     image: "https://images.unsplash.com/photo-1585110396000-c9ffd4e4b308?auto=format&fit=crop&w=900&q=80",
+    location: {
+      address: "Prospect Park, Brooklyn, NY",
+      latitude: 40.6602,
+      longitude: -73.9690,
+    },
   },
   {
     name: "Sky",
@@ -42,6 +57,11 @@ const PetList = [
     status: "Available",
     description: "A bright parakeet who chirps happily every morning.",
     image: "https://images.unsplash.com/photo-1444464666168-49d633b86797?auto=format&fit=crop&w=900&q=80",
+    location: {
+      address: "Staten Island Ferry Terminal, Staten Island, NY",
+      latitude: 40.7008,
+      longitude: -74.0143,
+    },
   },
   {
     name: "Hazel",
@@ -53,6 +73,11 @@ const PetList = [
     status: "Adopted",
     description: "A sweet family dog who is calm indoors and energetic outside.",
     image: "https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=900&q=80",
+    location: {
+      address: "Times Square, Manhattan, NY",
+      latitude: 40.7580,
+      longitude: -73.9855,
+    },
   },
   {
     name: "Luna",
@@ -64,6 +89,11 @@ const PetList = [
     status: "Available",
     description: "A cuddly rescue cat who loves quiet evenings and warm laps.",
     image: "https://images.unsplash.com/photo-1574158622682-e40e69881006?auto=format&fit=crop&w=900&q=80",
+    location: {
+      address: "High Line, Manhattan, NY",
+      latitude: 40.7480,
+      longitude: -74.0048,
+    },
   },
   {
     name: "Brandon",
@@ -75,6 +105,11 @@ const PetList = [
     status: "Available",
     description: "An affectionate corgi puppy with short legs and endless confidence.",
     image: "https://images.unsplash.com/photo-1544568100-847a948585b9?auto=format&fit=crop&w=900&q=80",
+    location: {
+      address: "Washington Square Park, Manhattan, NY",
+      latitude: 40.7308,
+      longitude: -73.9973,
+    },
   },
   {
     name: "Mizu",
@@ -174,6 +209,11 @@ const PetList = [
     status: "Available",
     description: "A friendly lab who loves fetch, treats, and everyone she meets.",
     image: "https://images.unsplash.com/photo-1518717758536-85ae29035b6d?auto=format&fit=crop&w=900&q=80",
+    location: {
+      address: "Battery Park, Manhattan, NY",
+      latitude: 40.7033,
+      longitude: -74.0170,
+    },
   },
   {
     name: "Theo",
@@ -185,6 +225,11 @@ const PetList = [
     status: "Pending",
     description: "A round-faced kitten with folded ears and a sweet quiet nature.",
     image: "https://images.unsplash.com/photo-1573865526739-10659fec78a5?auto=format&fit=crop&w=900&q=80",
+    location: {
+      address: "Greenwich Village, Manhattan, NY",
+      latitude: 40.7336,
+      longitude: -74.0027,
+    },
   },
   {
     name: "Peanut",
@@ -196,6 +241,11 @@ const PetList = [
     status: "Available",
     description: "A speedy little hamster who loves tunnels and sunflower seeds.",
     image: "https://images.unsplash.com/photo-1548767797-d8c844163c4c?auto=format&fit=crop&w=900&q=80",
+    location: {
+      address: "Bronx Zoo, Bronx, NY",
+      latitude: 40.8506,
+      longitude: -73.8773,
+    },
   },
   {
     name: "Willow",
@@ -207,6 +257,11 @@ const PetList = [
     status: "Available",
     description: "A neat black-and-white rabbit who is curious and easy to handle.",
     image: "https://images.unsplash.com/photo-1535241749838-299277b6305f?auto=format&fit=crop&w=900&q=80",
+    location: {
+      address: "Flushing Meadows Park, Queens, NY",
+      latitude: 40.7505,
+      longitude: -73.8407,
+    },
   },
   {
     name: "Maple",
@@ -218,6 +273,11 @@ const PetList = [
     status: "Pending",
     description: "A bright fluffy pomeranian who enjoys attention and soft blankets.",
     image: "https://images.unsplash.com/photo-1525253086316-d0c936c814f8?auto=format&fit=crop&w=900&q=80",
+    location: {
+      address: "Brooklyn Heights, Brooklyn, NY",
+      latitude: 40.6971,
+      longitude: -73.9845,
+    },
   },
   {
     name: "Nova",
@@ -229,6 +289,11 @@ const PetList = [
     status: "Available",
     description: "A confident young cat with tufted ears and a playful streak.",
     image: "https://images.unsplash.com/photo-1513245543132-31f507417b26?auto=format&fit=crop&w=900&q=80",
+    location: {
+      address: "Williamsburg, Brooklyn, NY",
+      latitude: 40.7081,
+      longitude: -73.9571,
+    },
   },
   {
     name: "Piper",
@@ -240,6 +305,11 @@ const PetList = [
     status: "Available",
     description: "A social bird who whistles back when you talk to her.",
     image: "https://images.unsplash.com/photo-1520808663317-647b476a81b9?auto=format&fit=crop&w=900&q=80",
+    location: {
+      address: "Coney Island, Brooklyn, NY",
+      latitude: 40.5755,
+      longitude: -73.9707,
+    },
   },
   {
     name: "Bean",
@@ -251,6 +321,11 @@ const PetList = [
     status: "Adopted",
     description: "A tiny energetic hamster with endless curiosity and speed.",
     image: "https://images.unsplash.com/photo-1425082661705-1834bfd09dca?auto=format&fit=crop&w=800&q=80",
+    location: {
+      address: "Staten Island Zoo, Staten Island, NY",
+      latitude: 40.6254,
+      longitude: -74.1158,
+    },
   },
   {
     name: "Sora",
@@ -284,6 +359,11 @@ const PetList = [
     status: "Available",
     description: "A charming lop-eared rabbit who likes attention and crunchy greens.",
     image: "https://images.unsplash.com/photo-1560114928-40f1f1eb26a0?auto=format&fit=crop&w=900&q=80",
+    location: {
+      address: "Hudson River Park, Manhattan, NY",
+      latitude: 40.7295,
+      longitude: -74.0119,
+    },
   },
 ];
 

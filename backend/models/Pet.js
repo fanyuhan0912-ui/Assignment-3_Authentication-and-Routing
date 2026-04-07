@@ -46,6 +46,21 @@ const petSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
+    location: {
+      address: {
+        type: String,
+        default: "",
+        trim: true,
+      },
+      latitude: {
+        type: Number,
+        default: null,
+      },
+      longitude: {
+        type: Number,
+        default: null,
+      },
+    },
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
