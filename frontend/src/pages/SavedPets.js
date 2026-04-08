@@ -6,6 +6,10 @@ function SavedPets() {
   const { savedPets, toggleSavedPet } = useContext(AuthContext);
   const navigate = useNavigate();
 
+  function openPetDetail(pet) {
+    navigate(`/pets/${pet._id}`);
+  }
+
   return (
     <section className="content-page">
       <div className="section-heading">
@@ -39,6 +43,13 @@ function SavedPets() {
                 </div>
                 <p className="saved-pet-description">{pet.description}</p>
                 <div className="pet-list-card-footer">
+                  <button
+                    className="pet-outline-button"
+                    type="button"
+                    onClick={() => openPetDetail(pet)}
+                  >
+                    View More
+                  </button>
                   <button
                     className="pet-favorite-badge is-saved"
                     type="button"

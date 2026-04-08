@@ -14,13 +14,14 @@ router.get("/", async (req, res) => {
 
 router.post("/", verifyToken, async (req, res) => {
   try {
-    const { name, category, age, description, image } = req.body;
+    const { name, category, age, description, image, phoneNumber } = req.body;
 
     const pet = await Pet.create({
       name,
       category,
       age,
       description,
+      phoneNumber,
       image,
       createdBy: req.user.userId,
     });

@@ -114,9 +114,9 @@ function Home() {
               <>
                 <button
                   className="hero-action hero-action-secondary"
-                  onClick={() => navigate("/user-profile")}
+                  onClick={() => navigate("/registration-form?type=posting")}
                 >
-                  Registration History
+                  Post Your Pet
                 </button>
                 <button
                   className="hero-action hero-action-secondary"

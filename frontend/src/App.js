@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Navigation from "./components/Navigation";
 import ProtectedRoute from "./components/ProtectedRoute";
+import AdminProtectedRoute from "./components/AdminProtectedRoute";
 import PublicRoute from "./components/PublicRoute";
 import Home from "./pages/Home";
 import AboutUs from "./pages/AboutUs";
@@ -11,8 +12,7 @@ import RegistrationForm from "./pages/RegistrationForm";
 import RegistrationSuccess from "./pages/RegistrationSuccess";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
-
-
+import AdminDashboard from "./pages/AdminDashboard";
 import PetDetail from "./pages/PetDetail";
 import "./styles/base.css";
 import "./styles/auth.css";
@@ -22,6 +22,7 @@ import "./styles/about.css";
 import "./styles/pets.css";
 import "./styles/profile.css";
 import "./styles/registration.css";
+import "./styles/admin.css";
 import "./styles/responsive.css";
 
 function App() {
@@ -39,6 +40,10 @@ function App() {
             <Route path="/user-profile" element={<UserProfile />} />
             <Route path="/registration-form" element={<RegistrationForm />} />
             <Route path="/registration-success" element={<RegistrationSuccess />} />
+          </Route>
+
+          <Route element={<AdminProtectedRoute />}>
+            <Route path="/admin-dashboard" element={<AdminDashboard />} />
           </Route>
         </Route>
 

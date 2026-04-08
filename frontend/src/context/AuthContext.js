@@ -90,6 +90,7 @@ export function AuthProvider({ children }) {
           displayName: userData.user?.displayName || userData.user?.username || "",
           profileImage: userData.user?.profileImage || defaultProfileImage,
           signInDate: userData.user?.signInDate || null,
+          role: userData.user?.role || "user",
         });
         setSavedPets(Array.isArray(userData.user?.savedPets) ? userData.user.savedPets : []);
         setRegistrations(Array.isArray(registrationData) ? registrationData : []);
@@ -107,6 +108,7 @@ export function AuthProvider({ children }) {
       displayName: decodedUser.username || "",
       profileImage: defaultProfileImage,
       signInDate: null,
+      role: "user", // Default role, will be updated when /me is called
     };
 
     localStorage.setItem("token", newToken);

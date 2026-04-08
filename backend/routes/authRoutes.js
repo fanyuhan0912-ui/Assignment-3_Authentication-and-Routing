@@ -71,6 +71,7 @@ router.get("/me", requireAuth, async (req, res) => {
     user: {
       id: req.user._id,
       username: req.user.username,
+      role: req.user.role,
       displayName: req.user.displayName || req.user.username,
       profileImage: req.user.profileImage || "",
       signInDate: req.user.signInDate,

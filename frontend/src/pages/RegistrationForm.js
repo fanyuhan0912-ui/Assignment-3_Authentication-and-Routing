@@ -185,6 +185,126 @@ function RegistrationForm() {
         </div>
 
         <form className="registration-form-grid" onSubmit={handleSubmit}>
+          {activeType === "posting" ? (
+            <>
+              <label className="registration-field">
+                <span>Name of the pet you wish to post *</span>
+                <input
+                  type="text"
+                  value={postingForm.petName}
+                  onChange={(event) =>
+                    setPostingForm((current) => ({ ...current, petName: event.target.value }))
+                  }
+                  required
+                />
+              </label>
+
+              <label className="registration-field">
+                <span>Picture of your pet *</span>
+                <input
+                  type="file"
+                  accept=".png,.jpg,.jpeg"
+                  onChange={(event) =>
+                    setPostingForm((current) => ({
+                      ...current,
+                      petImage: event.target.files?.[0] || null,
+                    }))
+                  }
+                  required
+                />
+              </label>
+
+              <label className="registration-field registration-field-half">
+                <span>Pet Type *</span>
+                <input
+                  type="text"
+                  value={postingForm.petType}
+                  onChange={(event) =>
+                    setPostingForm((current) => ({ ...current, petType: event.target.value }))
+                  }
+                  required
+                />
+              </label>
+
+              <label className="registration-field registration-field-half">
+                <span>Pet Breed *</span>
+                <input
+                  type="text"
+                  value={postingForm.petBreed}
+                  onChange={(event) =>
+                    setPostingForm((current) => ({ ...current, petBreed: event.target.value }))
+                  }
+                  required
+                />
+              </label>
+
+              <label className="registration-field registration-field-half">
+                <span>Pet Age *</span>
+                <input
+                  type="text"
+                  value={postingForm.petAge}
+                  onChange={(event) =>
+                    setPostingForm((current) => ({ ...current, petAge: event.target.value }))
+                  }
+                  required
+                />
+              </label>
+
+              <label className="registration-field registration-field-half">
+                <span>Pet Weight *</span>
+                <input
+                  type="text"
+                  value={postingForm.petWeight}
+                  onChange={(event) =>
+                    setPostingForm((current) => ({ ...current, petWeight: event.target.value }))
+                  }
+                  required
+                />
+              </label>
+
+              <label className="registration-field registration-field-half">
+                <span>Vaccinated *</span>
+                <input
+                  type="text"
+                  value={postingForm.vaccinated}
+                  onChange={(event) =>
+                    setPostingForm((current) => ({
+                      ...current,
+                      vaccinated: event.target.value,
+                    }))
+                  }
+                  required
+                />
+              </label>
+
+              <label className="registration-field registration-field-half">
+                <span>Pet Health Condition *</span>
+                <input
+                  type="text"
+                  value={postingForm.petHealthCondition}
+                  onChange={(event) =>
+                    setPostingForm((current) => ({
+                      ...current,
+                      petHealthCondition: event.target.value,
+                    }))
+                  }
+                  required
+                />
+              </label>
+
+              <label className="registration-field registration-field-full">
+                <span>Note from the owner</span>
+                <textarea
+                  rows="4"
+                  value={postingForm.note}
+                  onChange={(event) =>
+                    setPostingForm((current) => ({ ...current, note: event.target.value }))
+                  }
+                />
+              </label>
+            </>
+          ) : null}
+
           <label className="registration-field">
             <span>Full Name *</span>
             <input
@@ -321,125 +441,7 @@ function RegistrationForm() {
                 />
               </label>
             </>
-          ) : (
-            <>
-              <label className="registration-field">
-                <span>Name of the pet you wish to post *</span>
-                <input
-                  type="text"
-                  value={postingForm.petName}
-                  onChange={(event) =>
-                    setPostingForm((current) => ({ ...current, petName: event.target.value }))
-                  }
-                  required
-                />
-              </label>
-
-              <label className="registration-field">
-                <span>Picture of your pet *</span>
-                <input
-                  type="file"
-                  accept=".png,.jpg,.jpeg"
-                  onChange={(event) =>
-                    setPostingForm((current) => ({
-                      ...current,
-                      petImage: event.target.files?.[0] || null,
-                    }))
-                  }
-                  required
-                />
-              </label>
-
-              <label className="registration-field registration-field-half">
-                <span>Pet Type *</span>
-                <input
-                  type="text"
-                  value={postingForm.petType}
-                  onChange={(event) =>
-                    setPostingForm((current) => ({ ...current, petType: event.target.value }))
-                  }
-                  required
-                />
-              </label>
-
-              <label className="registration-field registration-field-half">
-                <span>Pet Breed *</span>
-                <input
-                  type="text"
-                  value={postingForm.petBreed}
-                  onChange={(event) =>
-                    setPostingForm((current) => ({ ...current, petBreed: event.target.value }))
-                  }
-                  required
-                />
-              </label>
-
-              <label className="registration-field registration-field-half">
-                <span>Pet Age *</span>
-                <input
-                  type="text"
-                  value={postingForm.petAge}
-                  onChange={(event) =>
-                    setPostingForm((current) => ({ ...current, petAge: event.target.value }))
-                  }
-                  required
-                />
-              </label>
-
-              <label className="registration-field registration-field-half">
-                <span>Pet Weight *</span>
-                <input
-                  type="text"
-                  value={postingForm.petWeight}
-                  onChange={(event) =>
-                    setPostingForm((current) => ({ ...current, petWeight: event.target.value }))
-                  }
-                  required
-                />
-              </label>
-
-              <label className="registration-field registration-field-half">
-                <span>Vaccinated *</span>
-                <input
-                  type="text"
-                  value={postingForm.vaccinated}
-                  onChange={(event) =>
-                    setPostingForm((current) => ({
-                      ...current,
-                      vaccinated: event.target.value,
-                    }))
-                  }
-                  required
-                />
-              </label>
-
-              <label className="registration-field registration-field-half">
-                <span>Pet Health Condition *</span>
-                <input
-                  type="text"
-                  value={postingForm.petHealthCondition}
-                  onChange={(event) =>
-                    setPostingForm((current) => ({
-                      ...current,
-                      petHealthCondition: event.target.value,
-                    }))
-                  }
-                  required
-                />
-              </label>
-
-              <label className="registration-field registration-field-full">
-                <span>Note from the owner</span>
-                <textarea
-                  rows="4"
-                  value={postingForm.note}
-                  onChange={(event) =>
-                    setPostingForm((current) => ({ ...current, note: event.target.value }))
-                  }
-                />
-              </label>
-            </>
-          )}
+          ) : null}
 
           {submitError ? <p className="registration-feedback is-error">{submitError}</p> : null}
           {submitSuccess ? (

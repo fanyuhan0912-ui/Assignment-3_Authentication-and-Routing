@@ -1,12 +1,16 @@
-import { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useContext, useEffect, useState } from "react";
+import { useParams, Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 import leftArrow from "../assets/left-arrow.png";
 
 function PetDetail() {
   const { id } = useParams();
+  const { registrations } = useContext(AuthContext);
+  const navigate = useNavigate();
   const [pet, setPet] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [showPhoneModal, setShowPhoneModal] = useState(false);
 
   // Assume your theme blue is this, adjust if needed
   const themeBlue = "#7fa5d7"; 
@@ -27,6 +31,33 @@ function PetDetail() {
         setLoading(false);
       });
   }, [id]);
+
+  function hasRegistrationHistory() {
+    return Array.isArray(registrations) && registrations.length > 0;
+  }
+
+  function getLatestRegistration() {
+    if (!Array.isArray(registrations) || registrations.length === 0) {
+      return null;
+    }
+
+    return [...registrations].sort(
+      (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+    )[0];
+  }
+
+  function handleContactClick() {
+    if (!hasRegistrationHistory()) {
+      navigate("/registration-form?type=posting");
+      return;
+    }
+
+    setShowPhoneModal(true);
+  }
+
+  function closePhoneModal() {
+    setShowPhoneModal(false);
+  }
 
   if (loading) return <h2 style={{ padding: "50px", textAlign: "center" }}>Loading...</h2>;
   if (error) return <h2 style={{ padding: "50px", textAlign: "center", color: "red" }}>{error}</h2>;
@@ -175,22 +206,44 @@ function PetDetail() {
           </div>
 
           {/* Bottom button */}
-          <button style={{
-            marginTop: "auto",
-            backgroundColor: themeBlue,
-            color: "white",
-            border: "none",
-            padding: "15px",
-            borderRadius: "10px",
-            fontSize: "1.1rem",
-            fontWeight: "bold",
-            cursor: "pointer",
-            transition: "opacity 0.2s"
-          }}>
+          <button
+            type="button"
+            onClick={handleContactClick}
+            style={{
+              marginTop: "auto",
+              backgroundColor: themeBlue,
+              color: "white",
+              border: "none",
+              padding: "15px",
+              borderRadius: "10px",
+              fontSize: "1.1rem",
+              fontWeight: "bold",
+              cursor: "pointer",
+              transition: "opacity 0.2s"
+            }}
+          >
             Contact / Purchase
           </button>
         </div>
       </div>
+
+      {showPhoneModal ? (
+        <div style={modalOverlayStyle}>
+          <div style={modalStyle}>
+            <h2 style={{ margin: 0, marginBottom: "12px" }}>Contact Phone</h2>
+            <p style={{ marginBottom: "20px", color: "#333" }}>
+              {pet.phonenumber|| "No phone number found."}
+            </p>
+            <button
+              type="button"
+              onClick={closePhoneModal}
+              style={modalButtonStyle}
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 }
@@ -212,5 +265,37 @@ const tagStyle = (bgColor, textColor = "#fff") => ({
   fontSize: "0.85rem",
   border: textColor !== "#fff" ? `1px solid ${textColor}44` : "none"
 });
+
+const modalOverlayStyle = {
+  position: "fixed",
+  top: 0,
+  left: 0,
+  right: 0,
+  bottom: 0,
+  backgroundColor: "rgba(0,0,0,0.4)",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  zIndex: 1000,
+};
+
+const modalStyle = {
+  width: "min(420px, 90vw)",
+  backgroundColor: "#ffffff",
+  padding: "24px",
+  borderRadius: "20px",
+  boxShadow: "0 18px 45px rgba(0, 0, 0, 0.12)",
+  textAlign: "center",
+};
+
+const modalButtonStyle = {
+  padding: "12px 22px",
+  backgroundColor: "#2563eb",
+  color: "white",
+  border: "none",
+  borderRadius: "12px",
+  cursor: "pointer",
+  fontWeight: 600,
+};
 
 export default PetDetail;

@@ -41,6 +41,11 @@ const petSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
+    phoneNumber: {
+      type: String,
+      default: "",
+      trim: true,
+    },
     image: {
       type: String,
       required: true,

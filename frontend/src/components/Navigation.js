@@ -28,6 +28,9 @@ function Navigation() {
           {isAuthenticated ? (
             <>
               <NavLink to="/saved-pets">Favorite Pets</NavLink>
+              {profile?.role === "admin" && (
+                <NavLink to="/admin-dashboard">Admin Dashboard</NavLink>
+              )}
               <NavLink className="site-user site-user-link" to="/user-profile">
                 Hi! {profile?.displayName || user?.username || "User"}
               </NavLink>
