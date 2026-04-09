@@ -1,7 +1,10 @@
+// Schema for pets displayed in the adoption system
+// Stores pet details, availability status, contact info, image, and location
 const mongoose = require("mongoose");
 
 const petSchema = new mongoose.Schema(
   {
+    // Basic pet information
     name: {
       type: String,
       required: true,
@@ -31,6 +34,7 @@ const petSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    // Tracks whether the pet is still open for adoption
     status: {
       type: String,
       enum: ["Available", "Pending", "Adopted"],
@@ -51,6 +55,7 @@ const petSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
+    // Location data used for displaying the pet's area or map position
     location: {
       address: {
         type: String,
@@ -66,12 +71,14 @@ const petSchema = new mongoose.Schema(
         default: null,
       },
     },
+    // User who created the pet posting; null for seeded/default pets
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       default: null,
     },
   },
+  // adds createdAt and updatedAt fields
   { timestamps: true }
 );
 

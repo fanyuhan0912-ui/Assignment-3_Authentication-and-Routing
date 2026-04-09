@@ -1,8 +1,10 @@
+// Routes for viewing, creating, and deleting pet postings
 const express = require("express");
 const Pet = require("../models/Pet");
 const verifyToken = require("../middleware/verifyToken");
 const router = express.Router();
 
+// Get all pets sorted by newest first
 router.get("/", async (req, res) => {
   try {
     const pets = await Pet.find().sort({ createdAt: -1 });
@@ -12,6 +14,7 @@ router.get("/", async (req, res) => {
   }
 });
 
+// Create a new pet posting for the currently logged-in user
 router.post("/", verifyToken, async (req, res) => {
   try {
     const { name, category, age, description, image, phoneNumber } = req.body;
@@ -47,6 +50,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+// Delete a pet only if it belongs to the current logged-in user
 router.delete("/:id", verifyToken, async (req, res) => {
   try {
     const deletedPet = await Pet.findOneAndDelete({
