@@ -11,6 +11,8 @@ const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState("stats");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [selectedRegistration, setSelectedRegistration] = useState(null);
+  const [showDetailModal, setShowDetailModal] = useState(false);
 
   const apiBase = process.env.REACT_APP_API_BASE || "http://localhost:5000/api";
 
@@ -154,6 +156,16 @@ const AdminDashboard = () => {
     } catch (err) {
       alert("Error deleting registration: " + err.message);
     }
+  };
+
+  const viewRegistrationDetail = (registration) => {
+    setSelectedRegistration(registration);
+    setShowDetailModal(true);
+  };
+
+  const closeDetailModal = () => {
+    setShowDetailModal(false);
+    setSelectedRegistration(null);
   };
 
   if (loading) {
@@ -321,6 +333,12 @@ const AdminDashboard = () => {
                   <td>{new Date(reg.createdAt).toLocaleDateString()}</td>
                   <td>
                     <button
+                      className="detail-btn"
+                      onClick={() => viewRegistrationDetail(reg)}
+                    >
+                      View Detail
+                    </button>
+                    <button
                       className="delete-btn"
                       onClick={() => deleteRegistration(reg._id)}
                     >
@@ -331,6 +349,170 @@ const AdminDashboard = () => {
               ))}
             </tbody>
           </table>
+        </div>
+      )}
+
+      {showDetailModal && selectedRegistration && (
+        <div className="modal-overlay" onClick={closeDetailModal}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <button className="close-btn" onClick={closeDetailModal}>×</button>
+            <h2>Registration Details</h2>
+
+            <div className="detail-section">
+              <h3>User Information</h3>
+              <div className="detail-group">
+                <div className="detail-field">
+                  <label>Username:</label>
+                  <p>{selectedRegistration.user?.username || "Unknown"}</p>
+                </div>
+                <div className="detail-field">
+                  <label>Full Name:</label>
+                  <p>{selectedRegistration.fullName}</p>
+                </div>
+                <div className="detail-field">
+                  <label>Email:</label>
+                  <p>{selectedRegistration.email}</p>
+                </div>
+                <div className="detail-field">
+                  <label>Phone:</label>
+                  <p>{selectedRegistration.phoneNumber}</p>
+                </div>
+                <div className="detail-field">
+                  <label>Address:</label>
+                  <p>{selectedRegistration.homeAddress}</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="detail-section">
+              <h3>Pet Information</h3>
+              <div className="detail-group">
+                <div className="detail-field">
+                  <label>Pet Name:</label>
+                  <p>{selectedRegistration.petName}</p>
+                </div>
+                <div className="detail-field">
+                  <label>Type:</label>
+                  <p>{selectedRegistration.petType}</p>
+                </div>
+                <div className="detail-field">
+                  <label>Breed:</label>
+                  <p>{selectedRegistration.petBreed}</p>
+                </div>
+                <div className="detail-field">
+                  <label>Age:</label>
+                  <p>{selectedRegistration.petAge}</p>
+                </div>
+                <div className="detail-field">
+                  <label>Weight:</label>
+                  <p>{selectedRegistration.petWeight}</p>
+                </div>
+                <div className="detail-field">
+                  <label>Vaccinated:</label>
+                  <p>{selectedRegistration.vaccinated}</p>
+                </div>
+                <div className="detail-field">
+                  <label>Health Condition:</label>
+                  <p>{selectedRegistration.petHealthCondition}</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="detail-section">
+              <h3>Additional Notes</h3>
+              <p>{selectedRegistration.note || "No notes"}</p>
+            </div>
+
+            <div className="detail-section">
+              <h3>Uploaded Documents</h3>
+              <div className="documents-grid">
+                {selectedRegistration.idDocument && selectedRegistration.idDocument.dataUrl && (
+                  <div className="document-item">
+                    <label>ID Document</label>
+                    {selectedRegistration.idDocument.mimeType && selectedRegistration.idDocument.mimeType.startsWith('image/') ? (
+                      <img 
+                        src={selectedRegistration.idDocument.dataUrl} 
+                        alt="ID Document" 
+                        className="detail-image"
+                      />
+                    ) : (
+                      <a 
+                        href={selectedRegistration.idDocument.dataUrl} 
+                        download={selectedRegistration.idDocument.fileName || "ID-Document"}
+                        className="file-download-btn"
+                      >
+                        📥 Download {selectedRegistration.idDocument.fileName || "ID Document"}
+                      </a>
+                    )}
+                  </div>
+                )}
+
+                {selectedRegistration.proofOfFunds && selectedRegistration.proofOfFunds.dataUrl && (
+                  <div className="document-item">
+                    <label>Proof of Funds</label>
+                    {selectedRegistration.proofOfFunds.mimeType && selectedRegistration.proofOfFunds.mimeType.startsWith('image/') ? (
+                      <img 
+                        src={selectedRegistration.proofOfFunds.dataUrl} 
+                        alt="Proof of Funds" 
+                        className="detail-image"
+                      />
+                    ) : (
+                      <a 
+                        href={selectedRegistration.proofOfFunds.dataUrl} 
+                        download={selectedRegistration.proofOfFunds.fileName || "Proof-of-Funds"}
+                        className="file-download-btn"
+                      >
+                        📥 Download {selectedRegistration.proofOfFunds.fileName || "Proof of Funds"}
+                      </a>
+                    )}
+                  </div>
+                )}
+
+                {selectedRegistration.petImage && selectedRegistration.petImage.dataUrl && (
+                  <div className="document-item">
+                    <label>Pet Image</label>
+                    {selectedRegistration.petImage.mimeType && selectedRegistration.petImage.mimeType.startsWith('image/') ? (
+                      <img 
+                        src={selectedRegistration.petImage.dataUrl} 
+                        alt="Pet" 
+                        className="detail-image"
+                      />
+                    ) : (
+                      <a 
+                        href={selectedRegistration.petImage.dataUrl} 
+                        download={selectedRegistration.petImage.fileName || "Pet-Image"}
+                        className="file-download-btn"
+                      >
+                        📥 Download {selectedRegistration.petImage.fileName || "Pet Image"}
+                      </a>
+                    )}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div className="detail-section">
+              <h3>Registration Status</h3>
+              <div className="detail-group">
+                <div className="detail-field">
+                  <label>Status:</label>
+                  <select 
+                    value={selectedRegistration.approvalStatus}
+                    onChange={(e) => {
+                      updateRegistrationStatus(selectedRegistration._id, e.target.value);
+                      setSelectedRegistration({
+                        ...selectedRegistration,
+                        approvalStatus: e.target.value
+                      });
+                    }}
+                  >
+                    <option value="Waiting">Waiting</option>
+                    <option value="Approved">Approved</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </div>
