@@ -1,0 +1,149 @@
+/* About page styling */
+.about-page {
+  padding: 3rem 4vw 5rem;
+  background:
+    radial-gradient(circle at top left, rgba(185, 211, 245, 0.34), transparent 24%),
+    radial-gradient(circle at bottom right, rgba(193, 218, 247, 0.26), transparent 28%),
+    #ffffff;
+}
+
+.about-shell {
+  max-width: 74rem;
+  margin: 0 auto;
+}
+
+.about-heading h1 {
+  margin: 0 0 1.5rem;
+  color: #6f97d5;
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  letter-spacing: 0.04em;
+}
+
+.about-intro-card {
+  display: grid;
+  grid-template-columns: minmax(20rem, 44%) 1fr;
+  gap: 1rem;
+  align-items: stretch;
+  padding: 1rem;
+  border: 1px solid #9dbbe5;
+  border-radius: 0.75rem;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 12px 26px rgba(121, 148, 188, 0.12);
+}
+
+.about-intro-image {
+  width: 100%;
+  height: 100%;
+  min-height: 18rem;
+  object-fit: cover;
+  border-radius: 0.5rem;
+}
+
+.about-intro-copy {
+  padding: 2rem 1.75rem;
+}
+
+.about-intro-copy h2 {
+  margin: 0 0 1rem;
+  color: #5c6d86;
+  font-size: 2rem;
+}
+
+.about-intro-copy p {
+  margin: 0 0 1rem;
+  color: #5e6978;
+  line-height: 1.7;
+}
+
+.about-intro-tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 5rem;
+  padding: 0.5rem 0.9rem;
+  background: #eaf2fd;
+  color: #6d96d4;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.about-memory-heading {
+  text-align: center;
+  margin: 10rem 0 10rem;
+}
+
+.about-memory-heading h2 {
+  margin: 0;
+  color: #79a0db;
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.1;
+}
+
+.about-section-label {
+  margin-bottom: 1rem;
+}
+
+.about-section-label h3 {
+  margin-top: 3rem;
+  color: #586272;
+  font-size: 2rem;
+}
+
+.about-memory-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.memory-card {
+  overflow: hidden;
+  border-radius: 0.75rem;
+  background: #fff;
+  box-shadow: 0 12px 24px rgba(120, 147, 186, 0.12);
+}
+
+.memory-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.memory-card {
+  min-height: 16rem;
+}
+
+
+.about-testimonial-section {
+  padding-top: 1rem;
+}
+
+.about-testimonial-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.about-testimonial-card {
+  min-height: 9rem;
+  padding: 1rem;
+  border: 1px solid #b7cef0;
+  border-radius: 0.6rem;
+  background: rgba(255, 255, 255, 0.97);
+  box-shadow: 0 8px 18px rgba(113, 142, 179, 0.1);
+}
+
+.about-testimonial-card h4 {
+  margin: 0 0 0.75rem;
+  color: #4f617a;
+  font-size: 1rem;
+}
+
+.about-testimonial-card p {
+  margin: 0;
+  color: #616d7e;
+  line-height: 1.6;
+  font-size: 0.92rem;
+}

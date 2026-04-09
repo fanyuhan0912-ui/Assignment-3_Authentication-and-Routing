@@ -1,0 +1,181 @@
+/* Shared app shell and top navigation */
+.site-shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.site-shell main {
+  flex: 1;
+}
+
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.125rem 14rem;
+  background: rgba(255, 255, 255, 0.94);
+  border-bottom: 1px solid #dde7f5;
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+}
+
+.brand-logo {
+  width: 92px;
+  height: auto;
+}
+
+.site-nav {
+  display: flex;
+  align-items: center;
+  gap: 38px;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.site-nav a {
+  color: #334766;
+  transition: color 0.2s ease;
+}
+
+.site-nav a.active {
+  color: #608ed1;
+}
+
+.site-nav a:hover {
+  color: #7aa0da;
+}
+
+.site-user {
+  color: #7f766d;
+}
+
+.site-user-link {
+  color: #7f766d;
+}
+
+.site-auth-link {
+  padding: 0.625rem 1.125rem;
+  border: 1px solid #c9d9ef;
+  border-radius: 10px;
+  background: #edf4ff;
+  color: #426aa5;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.site-auth-link:hover {
+  background: #dceafe;
+  border-color: #9ebce5;
+  color: #2f568f;
+  transform: translateY(-1px);
+}
+
+/* Shared footer styling */
+.site-footer {
+  display: grid;
+  grid-template-columns: minmax(220px, 1.15fr) minmax(140px, 0.8fr) minmax(260px, 1.1fr);
+  gap: 3rem;
+  padding: 3.375rem 6vw 3.75rem 10vw;
+  background: linear-gradient(0deg, rgba(189, 212, 239, 0.38) 0%, #ffffff 55%);
+  border-top: 1px solid #dde7f5;
+  align-items: start;
+}
+
+.footer-brand-block {
+  padding-left: 1.125rem;
+  color: #5e6775;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.footer-brand {
+  display: inline-flex;
+  margin-bottom: 1.25rem;
+}
+
+.footer-logo {
+  width: 150px;
+  height: auto;
+}
+
+.footer-brand-block p {
+  margin: 0;
+}
+
+.footer-links {
+  display: grid;
+  gap: 12px;
+  padding-top: 0.5rem;
+}
+
+.footer-links a {
+  color: #6287c2;
+  font-size: 14px;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.footer-links a:hover {
+  color: #426aa5;
+}
+
+.footer-contact h2 {
+  margin: 0 0 0.625rem;
+  color: #4d5563;
+  font-size: 36px;
+  letter-spacing: 0.03em;
+}
+
+.footer-contact p {
+  max-width: 20rem;
+  margin: 0 0 1rem;
+  color: #666f7e;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.footer-form {
+  display: grid;
+  gap: 10px;
+  max-width: 340px;
+}
+
+.footer-form input,
+.footer-form textarea {
+  width: 100%;
+  border: 1px solid #7fa5d7;
+  border-radius: 0.5rem;
+  padding: 0.75rem 0.875rem;
+  background: #fff;
+  color: #4f5b6d;
+  resize: vertical;
+}
+
+.footer-form input::placeholder,
+.footer-form textarea::placeholder {
+  color: #6f7f95;
+  font-family: inherit;
+  font-size: 14px;
+}
+
+.footer-form button {
+  width: 6rem;
+  border: 1px solid #7fa5d7;
+  border-radius: 5rem;
+  padding: 0.5rem 1.125rem;
+  background: #bdd4ef;
+  color: #537299;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.footer-form button:hover {
+  background: #a9c7ea;
+  color: #3f628f;
+}

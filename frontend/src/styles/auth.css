@@ -1,0 +1,63 @@
+/* Login and register page styling */
+.login-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f4f7fb;
+  font-family: Arial, sans-serif;
+}
+
+.login-card {
+  width: 25rem;
+  padding: 2.5rem;
+  border-radius: 12px;
+  border: 2px solid #7da3d8;
+  background: white;
+  text-align: center;
+}
+
+.login-title {
+  color: #4d7bb8;
+  margin-bottom: 0.3rem;
+}
+
+.login-sub {
+  color: #777;
+  margin-bottom: 1.8rem;
+}
+
+.login-input {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 0.9rem;
+  border-radius: 6px;
+  border: 1px solid #7da3d8;
+  font-size: 14px;
+}
+
+.login-btn {
+  width: 100%;
+  padding: 0.75rem;
+  background: #5c8ed6;
+  border: none;
+  color: white;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.login-btn:hover {
+  background: #4a77b7;
+}
+
+.register-text {
+  margin-top: 1.25rem;
+  font-size: 14px;
+}
+
+.register-link {
+  color: #5c8ed6;
+  cursor: pointer;
+  font-weight: bold;
+}

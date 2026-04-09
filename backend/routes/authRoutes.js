@@ -2,6 +2,8 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
+const Pet = require("../models/Pet");
+const requireAuth = require("../middleware/requireAuth");
 
 const router = express.Router();
 
@@ -20,6 +22,7 @@ router.post("/register", async (req, res) => {
     const newUser = new User({
       username,
       password: hashedPassword,
+      displayName: username,
     });
 
     await newUser.save();
@@ -51,7 +54,86 @@ router.post("/login", async (req, res) => {
       { expiresIn: "1h" }
     );
 
+    user.signInDate = new Date();
+    if (!user.displayName) {
+      user.displayName = user.username;
+    }
+    await user.save();
+
     res.json({ token });
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+router.get("/me", requireAuth, async (req, res) => {
+  res.json({
+    user: {
+      id: req.user._id,
+      username: req.user.username,
+      role: req.user.role,
+      displayName: req.user.displayName || req.user.username,
+      profileImage: req.user.profileImage || "",
+      signInDate: req.user.signInDate,
+      savedPets: req.user.savedPets,
+    },
+  });
+});
+
+router.patch("/profile", requireAuth, async (req, res) => {
+  try {
+    const { displayName, profileImage } = req.body;
+
+    if (typeof displayName === "string") {
+      req.user.displayName = displayName.trim() || req.user.username;
+    }
+
+    if (typeof profileImage === "string") {
+      req.user.profileImage = profileImage;
+    }
+
+    await req.user.save();
+
+    res.json({
+      profile: {
+        displayName: req.user.displayName || req.user.username,
+        profileImage: req.user.profileImage || "",
+        signInDate: req.user.signInDate,
+      },
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+router.patch("/saved-pets/:petId", requireAuth, async (req, res) => {
+  try {
+    const { petId } = req.params;
+    const pet = await Pet.findById(petId);
+
+    if (!pet) {
+      return res.status(404).json({ message: "Pet not found" });
+    }
+
+    const alreadySaved = req.user.savedPets.some(
+      (savedPet) => savedPet._id.toString() === petId
+    );
+
+    if (alreadySaved) {
+      req.user.savedPets = req.user.savedPets.filter(
+        (savedPet) => savedPet._id.toString() !== petId
+      );
+    } else {
+      req.user.savedPets.push(pet._id);
+    }
+
+    await req.user.save();
+    await req.user.populate("savedPets");
+
+    res.json({
+      savedPets: req.user.savedPets,
+      isSaved: !alreadySaved,
+    });
   } catch (error) {
     res.status(500).json({ message: "Server error" });
   }

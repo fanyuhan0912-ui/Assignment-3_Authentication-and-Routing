@@ -1,0 +1,134 @@
+/* Profile and saved pets section styling */
+.profile-heading {
+  text-align: center;
+}
+
+.profile-history-card {
+  display: grid;
+  grid-template-columns: minmax(40rem, 900px);
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  justify-content: center;
+}
+
+.profile-summary {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 1.5rem;
+  align-items: center;
+  padding: 1.75rem;
+  border: 1px solid #d9e6f7;
+  border-radius: 1.5rem;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 18px 2.5rem rgba(85, 113, 151, 0.08);
+}
+
+.profile-image-wrap {
+  width: 220px;
+  height: 220px;
+}
+
+.profile-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 1.5rem;
+}
+
+.profile-details h2 {
+  margin: 0 0 1rem;
+  color: #3d5f97;
+  font-size: 34px;
+}
+
+.profile-details p {
+  margin: 0 0 0.625rem;
+}
+
+.profile-form {
+  display: grid;
+  align-content: start;
+  gap: 1rem;
+  margin-top: 1.125rem;
+}
+
+.profile-label {
+  display: grid;
+  gap: 0.5rem;
+  color: #51627e;
+  font-weight: 600;
+}
+
+.registration-section {
+  margin-top: 1.5rem;
+}
+
+.profile-bottom-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+.profile-edit-button {
+  margin-top: 0.625rem;
+}
+
+.history-list {
+  display: grid;
+  gap: 18px;
+}
+
+.profile-saved-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.profile-saved-list-card h3 {
+  margin: 0 0 0.5rem;
+  color: #3d5f97;
+}
+
+.history-item {
+  display: grid;
+  grid-template-columns: 7.5rem 1fr;
+  gap: 18px;
+  align-items: start;
+  padding: 1.125rem;
+  border: 1px solid #d9e6f7;
+  border-radius: 20px;
+  background: #fff;
+}
+
+.history-item img {
+  width: 7.5rem;
+  height: 7.5rem;
+  object-fit: cover;
+  border-radius: 18px;
+}
+
+.history-item h3 {
+  margin: 0 0 0.5rem;
+  color: #3d5f97;
+}
+
+.history-item p {
+  margin: 0 0 0.375rem;
+}
+
+.history-status-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+}
+
+.status-waiting {
+  background: #f4c64f;
+  color: #fff;
+}
+
+.status-approved {
+  background: #86bb8a;
+  color: #fff;
+}

@@ -1,0 +1,400 @@
+/* Tablet and small desktop adjustments */
+@media (max-width: 75rem) {
+  .site-header {
+    padding: 1.125rem 2rem;
+  }
+
+  .site-nav {
+    gap: 1.5rem;
+  }
+
+  .hero {
+    min-height: 620px;
+  }
+
+  .hero-copy {
+    margin-left: 4%;
+    max-width: 22.5rem;
+    min-height: 32.5rem;
+  }
+
+  .services-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .pet-list-page {
+    padding: 2.5rem 4vw 3.5rem;
+  }
+
+  .pet-list-layout {
+    grid-template-columns: 300px 1fr;
+    gap: 2.5rem;
+  }
+
+  .pet-grid-listing {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .pet-filter-panel {
+    margin-top: 0;
+  }
+
+  .profile-history-card {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .registration-page {
+    max-width: 100%;
+  }
+
+  .about-intro-card,
+  .about-memory-grid,
+  .about-testimonial-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .memory-card-large,
+  .about-memory-grid .memory-card:nth-child(2),
+  .about-memory-grid .memory-card:nth-child(3) {
+    min-height: 16rem;
+    margin-bottom: 0;
+  }
+
+  .registration-success-card {
+    grid-template-columns: 1fr;
+  }
+
+  .registration-success-copy {
+    padding-top: 2rem;
+    padding-left: 0;
+  }
+}
+
+/* Tablet layout stacking */
+@media (max-width: 900px) {
+  .site-header {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.125rem 1.25rem;
+  }
+
+  .site-nav {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 18px;
+    text-align: center;
+  }
+
+  .hero {
+    width: 100%;
+    padding: 1.75rem 1.25rem 2.25rem;
+    min-height: 32.5rem;
+    margin: 0;
+  }
+
+  .hero-copy {
+    max-width: none;
+    min-height: 420px;
+    margin-left: 0;
+    text-align: center;
+    align-items: center;
+  }
+
+  .hero-text {
+    max-width: 32.5rem;
+  }
+
+  .hero-actions {
+    justify-content: center;
+  }
+
+  .content-page {
+    padding: 2rem 1.25rem 3rem;
+  }
+
+  .pet-list-layout {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .pet-grid-listing {
+    grid-template-columns: 1fr;
+  }
+
+  .pet-list-heading h1 {
+    font-size: 38px;
+  }
+
+  .pet-filter-panel {
+    max-width: 27.5rem;
+    margin: 0 auto;
+  }
+
+  .pet-list-results {
+    width: 100%;
+  }
+
+  .services-section {
+    padding: 3.5rem 1.25rem 4rem;
+  }
+
+  .services-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .site-footer {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .footer-contact p,
+  .footer-form {
+    max-width: none;
+  }
+
+  .profile-history-card,
+  .profile-summary,
+  .history-item,
+  .profile-bottom-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .saved-pets-grid,
+  .profile-saved-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .profile-image-wrap {
+    width: 100%;
+    max-width: 260px;
+    height: 260px;
+    margin: 0 auto;
+  }
+
+  .profile-summary {
+    justify-items: center;
+    text-align: center;
+  }
+
+  .profile-details {
+    width: 100%;
+  }
+
+  .registration-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .registration-field-half {
+    grid-column: 1 / -1;
+  }
+
+  .registration-success-art {
+    min-height: 18rem;
+  }
+
+  .about-page {
+    padding: 2.5rem 1.25rem 4rem;
+  }
+
+  .about-intro-copy {
+    padding: 1.25rem 0.75rem 1rem;
+  }
+
+  .about-section-label h3 {
+    font-size: 1.5rem;
+  }
+}
+
+/* Phone layout adjustments */
+@media (max-width: 40rem) {
+  .login-container {
+    padding: 1.25rem;
+    height: auto;
+    min-height: 100vh;
+  }
+
+  .login-card {
+    width: 100%;
+    padding: 1.75rem 1.25rem;
+  }
+
+  .site-header {
+    padding: 0.875rem 1rem;
+  }
+
+  .brand-logo {
+    width: 78px;
+  }
+
+  .site-nav {
+    gap: 12px 1rem;
+    font-size: 14px;
+  }
+
+  .site-footer {
+    padding: 2.625rem 1rem 3rem;
+  }
+
+  .footer-contact h2 {
+    font-size: 30px;
+  }
+
+  .footer-form button {
+    width: 100%;
+  }
+
+  .hero {
+    min-height: 27.5rem;
+    padding: 1.25rem 1rem 1.75rem;
+  }
+
+  .hero-copy {
+    min-height: 22.5rem;
+  }
+
+  .hero-title {
+    font-size: clamp(2.3rem, 12vw, 3.4rem);
+  }
+
+  .hero-text {
+    font-size: 1rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .hero-action,
+  .pet-save-button,
+  .pet-outline-button {
+    width: 100%;
+    text-align: center;
+  }
+
+  .services-section {
+    padding: 2.75rem 1rem 3.25rem;
+  }
+
+  .services-header h2 {
+    font-size: 2rem;
+  }
+
+  .service-card {
+    padding: 1rem;
+  }
+
+  .service-icon-panel {
+    min-height: 150px;
+  }
+
+  .service-card-body {
+    padding: 1.25rem 0.5rem 0.5rem;
+  }
+
+  .service-card-body h3 {
+    font-size: 20px;
+  }
+
+  .pet-list-page {
+    padding: 2rem 1rem 2.75rem;
+  }
+
+  .pet-list-heading h1 {
+    font-size: 30px;
+  }
+
+  .pet-filter-card {
+    padding: 1.125rem 0.875rem;
+  }
+
+  .pet-filter-title,
+  .pet-filter-card h2 {
+    font-size: 1rem;
+    letter-spacing: 0.14em;
+  }
+
+  .pet-list-card-body {
+    padding: 0.75rem;
+  }
+
+  .pet-list-card-heading h2 {
+    font-size: 1.5rem;
+  }
+
+  .pet-list-card-footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .pet-status-badge {
+    width: 100%;
+  }
+
+  .adoption-form-actions {
+    flex-direction: column;
+  }
+
+  .content-page {
+    padding: 1.75rem 1rem 2.5rem;
+  }
+
+  .saved-pets-grid,
+  .profile-saved-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .content-card {
+    padding: 1.25rem 1rem;
+  }
+
+  .profile-details h2 {
+    font-size: 28px;
+  }
+
+  .history-item img {
+    width: 100%;
+    height: 180px;
+  }
+
+  .registration-switch {
+    grid-template-columns: 1fr;
+  }
+
+  .registration-card {
+    padding: 1.25rem;
+  }
+
+  .registration-card-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .registration-actions {
+    flex-direction: column;
+  }
+
+  .about-heading h1 {
+    font-size: 2.2rem;
+  }
+
+  .about-memory-heading h2 {
+    font-size: 2rem;
+  }
+
+  .registration-success-page {
+    padding: 2.5rem 1rem 4rem;
+  }
+
+  .registration-success-copy h1 {
+    font-size: clamp(2.4rem, 11vw, 3.4rem);
+  }
+
+  .registration-success-text {
+    font-size: 1rem;
+  }
+
+  .registration-success-dog {
+    left: 0;
+  }
+
+  .registration-success-dots {
+    right: 0;
+    width: 6rem;
+  }
+}
