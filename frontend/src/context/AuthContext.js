@@ -7,7 +7,7 @@ const defaultProfileImage = logo;
 const authApiBase = "http://localhost:5000/api/auth";
 const registrationsApiBase = "http://localhost:5000/api/registrations";
 
-function getStoredUser(token) {
+function getSessionUser(token) {
   if (!token) {
     return null;
   }
@@ -15,14 +15,14 @@ function getStoredUser(token) {
   try {
     return jwtDecode(token);
   } catch (error) {
-    localStorage.removeItem("token");
+    sessionStorage.removeItem("token");
     return null;
   }
 }
 
 export function AuthProvider({ children }) {
-  const storedToken = localStorage.getItem("token");
-  const storedUser = getStoredUser(storedToken);
+  const storedToken = sessionStorage.getItem("token");
+  const storedUser = getSessionUser(storedToken);
   const storedAdoptionHistory = localStorage.getItem("adoptionHistory");
 
   const [token, setToken] = useState(storedUser ? storedToken : null);
@@ -39,7 +39,7 @@ export function AuthProvider({ children }) {
   const [registrations, setRegistrations] = useState([]);
 
   function logout() {
-    localStorage.removeItem("token");
+    sessionStorage.removeItem("token");
     setToken(null);
     setUser(null);
     setProfile({
@@ -111,7 +111,7 @@ export function AuthProvider({ children }) {
       role: "user", // Default role, will be updated when /me is called
     };
 
-    localStorage.setItem("token", newToken);
+    sessionStorage.setItem("token", newToken);
     localStorage.removeItem("savedPets");
     setToken(newToken);
     setUser(decodedUser);

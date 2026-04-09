@@ -4,10 +4,10 @@ const Pet = require("../models/Pet");
 const verifyToken = require("../middleware/verifyToken");
 const router = express.Router();
 
-// Get all pets sorted by newest first
+// Get public pets (only available ones) sorted by newest first
 router.get("/", async (req, res) => {
   try {
-    const pets = await Pet.find().sort({ createdAt: -1 });
+    const pets = await Pet.find({ status: "Available" }).sort({ createdAt: -1 });
     res.json(pets);
   } catch (error) {
     res.status(500).json({ message: "Server error" });

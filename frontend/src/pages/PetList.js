@@ -7,6 +7,13 @@ function normalizePetRecord(record, index) {
   const categories = ["Dog", "Cat", "Rabbit", "Bird", "Hamster"];
   const sizes = ["Small", "Medium", "Large"];
   const statuses = ["Available", "Pending", "Adopted"];
+  const rawStatus = String(record.status || "").trim().toLowerCase();
+  const normalizedStatusMap = {
+    available: "Available",
+    pending: "Pending",
+    waiting: "Pending",
+    adopted: "Adopted",
+  };
 
   // Parse age to months
   let ageInMonths = 0;
@@ -43,7 +50,7 @@ function normalizePetRecord(record, index) {
     breed: record.breed || (record.category || categories[index % categories.length]),
     size: record.size || sizes[index % sizes.length],
     vaccinated: typeof record.vaccinated === "boolean" ? record.vaccinated : index % 2 === 0,
-    status: record.status || statuses[index % statuses.length],
+    status: normalizedStatusMap[rawStatus] || statuses[index % statuses.length],
     description: record.description || "No description available.",
     image:
       record.image ||
@@ -101,6 +108,7 @@ function PetList() {
 
   const filteredPets = useMemo(() => {
     return pets.filter((pet) => {
+      const isPubliclyVisible = pet.status === "Available";
       const keyword = search.toLowerCase();
       const matchesSearch =
         pet.name.toLowerCase().includes(keyword) ||
@@ -117,6 +125,7 @@ function PetList() {
       const matchesAvailable = !availableOnly || pet.status === "Available";
 
       return (
+        isPubliclyVisible &&
         matchesSearch &&
         matchesCategory &&
         matchesBreed &&
@@ -183,8 +192,8 @@ function PetList() {
       <div className="pet-list-heading">
         <h1>PET LISTING</h1>
         <p>
-          We update our pet status in real time. The status includes available,
-          pending and adopted.
+          We update our pet status in real time. Only pets currently available
+          for adoption are shown here.
         </p>
       </div>
 

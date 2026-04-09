@@ -3,7 +3,7 @@ import { AuthContext } from "../context/AuthContext";
 import "../styles/admin.css";
 
 const AdminDashboard = () => {
-  const { profile } = useContext(AuthContext);
+  const { profile, token } = useContext(AuthContext);
   const [stats, setStats] = useState(null);
   const [users, setUsers] = useState([]);
   const [pets, setPets] = useState([]);
@@ -30,16 +30,16 @@ const AdminDashboard = () => {
       setLoading(true);
       const [statsRes, usersRes, petsRes, regsRes] = await Promise.all([
         fetch(`${apiBase}/admin/stats`, {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+          headers: { Authorization: `Bearer ${token}` },
         }),
         fetch(`${apiBase}/admin/users`, {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+          headers: { Authorization: `Bearer ${token}` },
         }),
         fetch(`${apiBase}/admin/pets`, {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+          headers: { Authorization: `Bearer ${token}` },
         }),
         fetch(`${apiBase}/admin/registrations`, {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+          headers: { Authorization: `Bearer ${token}` },
         }),
       ]);
 
@@ -71,7 +71,7 @@ const AdminDashboard = () => {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ role: newRole }),
       });
@@ -92,7 +92,7 @@ const AdminDashboard = () => {
     try {
       const response = await fetch(`${apiBase}/admin/users/${userId}`, {
         method: "DELETE",
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        headers: { Authorization: `Bearer ${token}` },
       });
 
       if (!response.ok) throw new Error("Failed to delete user");
@@ -109,7 +109,7 @@ const AdminDashboard = () => {
     try {
       const response = await fetch(`${apiBase}/admin/pets/${petId}`, {
         method: "DELETE",
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        headers: { Authorization: `Bearer ${token}` },
       });
 
       if (!response.ok) throw new Error("Failed to delete pet");
@@ -126,7 +126,7 @@ const AdminDashboard = () => {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ status }),
       });
@@ -149,7 +149,7 @@ const AdminDashboard = () => {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ approvalStatus: status }),
       });
@@ -170,7 +170,7 @@ const AdminDashboard = () => {
     try {
       const response = await fetch(`${apiBase}/admin/registrations/${regId}`, {
         method: "DELETE",
-        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        headers: { Authorization: `Bearer ${token}` },
       });
 
       if (!response.ok) throw new Error("Failed to delete registration");
@@ -605,3 +605,4 @@ const AdminDashboard = () => {
 };
 
 export default AdminDashboard;
+

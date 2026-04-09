@@ -48,7 +48,7 @@ function PetDetail() {
 
   function handleContactClick() {
     if (!hasRegistrationHistory()) {
-      navigate("/registration-form?type=posting");
+      navigate("/registration-form?type=adoption");
       return;
     }
 

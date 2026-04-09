@@ -127,7 +127,7 @@ function Home() {
               </>
             ) : (
               <button className="hero-action" onClick={() => navigate("/login")}>
-                Get Start
+                Get Started
               </button>
             )}
           </div>

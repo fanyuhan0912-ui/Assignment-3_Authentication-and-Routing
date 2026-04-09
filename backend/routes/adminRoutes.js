@@ -165,6 +165,22 @@ router.patch("/registrations/:id/status", async (req, res) => {
       registration.petId = createdPet._id;
     }
 
+    if (
+      registration.formType === "posting" &&
+      registration.petId &&
+      approvalStatus === "Approved"
+    ) {
+      await Pet.findByIdAndUpdate(registration.petId, { status: "Available" });
+    }
+
+    if (
+      registration.formType === "posting" &&
+      registration.petId &&
+      approvalStatus === "Waiting"
+    ) {
+      await Pet.findByIdAndUpdate(registration.petId, { status: "Pending" });
+    }
+
     await registration.save();
 
     res.json(registration);
