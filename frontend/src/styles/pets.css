@@ -282,6 +282,13 @@
   letter-spacing: 0.08em;
 }
 
+.pet-adoption-text {
+  margin: 0 0 0.875rem;
+  color: #5b6d84;
+  font-size: 14px;
+  font-weight: 600;
+}
+
 .pet-list-card-footer {
   display: flex;
   align-items: center;

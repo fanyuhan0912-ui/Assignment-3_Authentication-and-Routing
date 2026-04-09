@@ -346,6 +346,10 @@ function PetList() {
                         <span>{pet.size}</span>
                       </div>
 
+                      <p className="pet-adoption-text">
+                        Adopted: {pet.status === "Adopted" ? "Yes" : "No"}
+                      </p>
+
                       <div className="pet-list-card-footer">
                         <span className={`pet-status-badge status-${pet.status.toLowerCase()}`}>
                           {pet.status}

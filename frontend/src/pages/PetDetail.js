@@ -59,6 +59,8 @@ function PetDetail() {
     setShowPhoneModal(false);
   }
 
+  const isAdopted = pet?.status === "Adopted";
+
   if (loading) return <h2 style={{ padding: "50px", textAlign: "center" }}>Loading...</h2>;
   if (error) return <h2 style={{ padding: "50px", textAlign: "center", color: "red" }}>{error}</h2>;
   if (!pet) return <h2 style={{ padding: "50px", textAlign: "center" }}>Pet not found</h2>;
@@ -189,12 +191,26 @@ function PetDetail() {
             {pet.price ? `¥${pet.price}` : "Price upon request"}
           </div>
 
+          <div
+            style={{
+              marginBottom: "20px",
+              padding: "14px 16px",
+              borderRadius: "12px",
+              backgroundColor: isAdopted ? "#eef4ff" : "#f3fbf5",
+              color: isAdopted ? "#5f7fb2" : "#3f7d52",
+              fontWeight: 600,
+            }}
+          >
+            Adopted: {isAdopted ? "Yes" : "No"}
+          </div>
+
           {/* Detailed info list */}
           <div style={{ borderTop: "1px solid #eee", paddingTop: "20px" }}>
             <InfoRow label="Age" value={pet.age} />
             <InfoRow label="Gender" value={pet.gender || "Unknown"} />
             <InfoRow label="Vaccination" value={pet.vaccinated ? "Vaccinated" : "Not vaccinated"} />
             <InfoRow label="Size" value={pet.size || "Standard"} />
+            <InfoRow label="Adoption status" value={pet.status || "Available"} />
           </div>
 
           {/* Description section */}
@@ -209,20 +225,22 @@ function PetDetail() {
           <button
             type="button"
             onClick={handleContactClick}
+            disabled={isAdopted}
             style={{
               marginTop: "auto",
-              backgroundColor: themeBlue,
+              backgroundColor: isAdopted ? "#b8c6da" : themeBlue,
               color: "white",
               border: "none",
               padding: "15px",
               borderRadius: "10px",
               fontSize: "1.1rem",
               fontWeight: "bold",
-              cursor: "pointer",
+              cursor: isAdopted ? "not-allowed" : "pointer",
+              opacity: isAdopted ? 0.75 : 1,
               transition: "opacity 0.2s"
             }}
           >
-            Contact / Purchase
+            {isAdopted ? "Already Adopted" : "Contact / Purchase"}
           </button>
         </div>
       </div>

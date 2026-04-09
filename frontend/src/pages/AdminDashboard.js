@@ -120,6 +120,29 @@ const AdminDashboard = () => {
     }
   };
 
+  const updatePetStatus = async (petId, status) => {
+    try {
+      const response = await fetch(`${apiBase}/admin/pets/${petId}/status`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify({ status }),
+      });
+
+      if (!response.ok) throw new Error("Failed to update pet status");
+
+      const updatedPet = await response.json();
+
+      setPets(pets.map((pet) => (
+        pet._id === petId ? updatedPet : pet
+      )));
+    } catch (err) {
+      alert("Error updating pet status: " + err.message);
+    }
+  };
+
   const updateRegistrationStatus = async (regId, status) => {
     try {
       const response = await fetch(`${apiBase}/admin/registrations/${regId}/status`, {
@@ -166,6 +189,65 @@ const AdminDashboard = () => {
   const closeDetailModal = () => {
     setShowDetailModal(false);
     setSelectedRegistration(null);
+  };
+
+  const adoptionRegistrations = registrations.filter(
+    (registration) => registration.formType === "adoption"
+  );
+  const postingRegistrations = registrations.filter(
+    (registration) => registration.formType === "posting"
+  );
+
+  const renderRegistrationTable = (registrationList, emptyMessage) => {
+    if (registrationList.length === 0) {
+      return <p>{emptyMessage}</p>;
+    }
+
+    return (
+      <table className="admin-table">
+        <thead>
+          <tr>
+            <th>User</th>
+            <th>Pet</th>
+            <th>Status</th>
+            <th>Created</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {registrationList.map((reg) => (
+            <tr key={reg._id}>
+              <td>{reg.user?.username || "Unknown"}</td>
+              <td>{reg.petName}</td>
+              <td>
+                <select
+                  value={reg.approvalStatus}
+                  onChange={(e) => updateRegistrationStatus(reg._id, e.target.value)}
+                >
+                  <option value="Waiting">Waiting</option>
+                  <option value="Approved">Approved</option>
+                </select>
+              </td>
+              <td>{new Date(reg.createdAt).toLocaleDateString()}</td>
+              <td>
+                <button
+                  className="detail-btn"
+                  onClick={() => viewRegistrationDetail(reg)}
+                >
+                  View Detail
+                </button>
+                <button
+                  className="delete-btn"
+                  onClick={() => deleteRegistration(reg._id)}
+                >
+                  Delete
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    );
   };
 
   if (loading) {
@@ -278,6 +360,8 @@ const AdminDashboard = () => {
                 <th>Name</th>
                 <th>Type</th>
                 <th>Breed</th>
+                <th>Adopted</th>
+                <th>Status</th>
                 <th>Created By</th>
                 <th>Actions</th>
               </tr>
@@ -286,8 +370,23 @@ const AdminDashboard = () => {
               {pets.map(pet => (
                 <tr key={pet._id}>
                   <td>{pet.name}</td>
-                  <td>{pet.type}</td>
+                  <td>{pet.type || pet.category || "Unknown"}</td>
                   <td>{pet.breed}</td>
+                  <td>
+                    <span className={`pet-adoption-indicator ${pet.status === "Adopted" ? "is-adopted" : "is-available"}`}>
+                      {pet.status === "Adopted" ? "Yes" : "No"}
+                    </span>
+                  </td>
+                  <td>
+                    <select
+                      value={pet.status || "Available"}
+                      onChange={(e) => updatePetStatus(pet._id, e.target.value)}
+                    >
+                      <option value="Available">Available</option>
+                      <option value="Pending">Pending</option>
+                      <option value="Adopted">Adopted</option>
+                    </select>
+                  </td>
                   <td>{pet.createdBy?.username || "Unknown"}</td>
                   <td>
                     <button
@@ -306,49 +405,27 @@ const AdminDashboard = () => {
 
       {activeTab === "registrations" && (
         <div className="registrations-section">
-          <table className="admin-table">
-            <thead>
-              <tr>
-                <th>User</th>
-                <th>Pet</th>
-                <th>Status</th>
-                <th>Created</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {registrations.map(reg => (
-                <tr key={reg._id}>
-                  <td>{reg.user?.username || "Unknown"}</td>
-                  <td>{reg.petName}</td>
-                  <td>
-                    <select
-                      value={reg.approvalStatus}
-                      onChange={(e) => updateRegistrationStatus(reg._id, e.target.value)}
-                    >
-                      <option value="Waiting">Waiting</option>
-                      <option value="Approved">Approved</option>
-                    </select>
-                  </td>
-                  <td>{new Date(reg.createdAt).toLocaleDateString()}</td>
-                  <td>
-                    <button
-                      className="detail-btn"
-                      onClick={() => viewRegistrationDetail(reg)}
-                    >
-                      View Detail
-                    </button>
-                    <button
-                      className="delete-btn"
-                      onClick={() => deleteRegistration(reg._id)}
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <div className="registration-group">
+            <div className="registration-group-heading">
+              <h2>Pet Posting Applications</h2>
+              <span>{postingRegistrations.length}</span>
+            </div>
+            {renderRegistrationTable(
+              postingRegistrations,
+              "No pet posting applications received yet."
+            )}
+          </div>
+
+          <div className="registration-group">
+            <div className="registration-group-heading">
+              <h2>Pet Adoption Applications</h2>
+              <span>{adoptionRegistrations.length}</span>
+            </div>
+            {renderRegistrationTable(
+              adoptionRegistrations,
+              "No pet adoption applications received yet."
+            )}
+          </div>
         </div>
       )}
 
@@ -361,6 +438,14 @@ const AdminDashboard = () => {
             <div className="detail-section">
               <h3>User Information</h3>
               <div className="detail-group">
+                <div className="detail-field">
+                  <label>Application Type:</label>
+                  <p>
+                    {selectedRegistration.formType === "posting"
+                      ? "Pet Posting"
+                      : "Pet Adoption"}
+                  </p>
+                </div>
                 <div className="detail-field">
                   <label>Username:</label>
                   <p>{selectedRegistration.user?.username || "Unknown"}</p>

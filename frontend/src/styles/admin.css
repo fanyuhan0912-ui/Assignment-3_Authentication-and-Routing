@@ -47,6 +47,42 @@
   margin-bottom: 30px;
 }
 
+.registrations-section {
+  display: grid;
+  gap: 24px;
+}
+
+.registration-group {
+  display: grid;
+  gap: 12px;
+}
+
+.registration-group-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.registration-group-heading h2 {
+  margin: 0;
+  color: #333;
+  font-size: 20px;
+}
+
+.registration-group-heading span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 36px;
+  height: 36px;
+  padding: 0 10px;
+  border-radius: 999px;
+  background: #e8f1ff;
+  color: #4d73b8;
+  font-weight: 700;
+}
+
 .stat-card {
   background: white;
   padding: 20px;
@@ -100,6 +136,27 @@
   border: 1px solid #ddd;
   border-radius: 4px;
   background: white;
+}
+
+.pet-adoption-indicator {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 52px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.pet-adoption-indicator.is-adopted {
+  background: #e8f1ff;
+  color: #4d73b8;
+}
+
+.pet-adoption-indicator.is-available {
+  background: #ebf8ef;
+  color: #2f7a47;
 }
 
 .delete-btn {

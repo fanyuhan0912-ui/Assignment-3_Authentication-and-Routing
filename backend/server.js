@@ -10,6 +10,7 @@ const petRoutes = require("./routes/petRoutes");
 const registrationRoutes = require("./routes/registrationRoutes");
 const adminRoutes = require("./routes/adminRoutes");
 const seedPets = require("./utils/seedPets");
+const syncApprovedPostingRegistrations = require("./utils/syncApprovedPostingRegistrations");
 
 const app = express();
 
@@ -26,6 +27,7 @@ mongoose
   .then(async () => {
     console.log("MongoDB connected");
     await seedPets();
+    await syncApprovedPostingRegistrations();
 
     app.listen(process.env.PORT, () => {
       console.log(`Server running on port ${process.env.PORT}`);

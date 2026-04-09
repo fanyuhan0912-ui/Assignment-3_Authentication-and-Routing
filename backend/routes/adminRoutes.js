@@ -69,6 +69,30 @@ router.get("/pets", async (req, res) => {
   }
 });
 
+router.patch("/pets/:id/status", async (req, res) => {
+  try {
+    const { status } = req.body;
+
+    if (!["Available", "Pending", "Adopted"].includes(status)) {
+      return res.status(400).json({ message: "Invalid pet status" });
+    }
+
+    const pet = await Pet.findByIdAndUpdate(
+      req.params.id,
+      { status },
+      { new: true }
+    ).populate("createdBy", "username");
+
+    if (!pet) {
+      return res.status(404).json({ message: "Pet not found" });
+    }
+
+    res.json(pet);
+  } catch (error) {
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
 // Delete pet
 router.delete("/pets/:id", async (req, res) => {
   try {
@@ -105,15 +129,43 @@ router.patch("/registrations/:id/status", async (req, res) => {
       return res.status(400).json({ message: "Invalid status" });
     }
 
-    const registration = await Registration.findByIdAndUpdate(
-      req.params.id,
-      { approvalStatus },
-      { new: true }
-    ).populate("user", "username displayName");
+    const registration = await Registration.findById(req.params.id).populate(
+      "user",
+      "username displayName"
+    );
 
     if (!registration) {
       return res.status(404).json({ message: "Registration not found" });
     }
+
+    registration.approvalStatus = approvalStatus;
+
+    if (
+      approvalStatus === "Approved" &&
+      registration.formType === "posting" &&
+      !registration.petId
+    ) {
+      const createdPet = await Pet.create({
+        name: registration.petName,
+        category: registration.petType || "Unknown",
+        age: registration.petAge || "Unknown",
+        breed: registration.petBreed || "",
+        vaccinated:
+          typeof registration.vaccinated === "string"
+            ? registration.vaccinated.trim().toLowerCase() === "yes"
+            : Boolean(registration.vaccinated),
+        description:
+          registration.note || "Pet posting approved from registration form.",
+        phoneNumber: registration.phoneNumber || "",
+        image: registration.petImage?.dataUrl || "",
+        createdBy: registration.user?._id || null,
+        status: "Available",
+      });
+
+      registration.petId = createdPet._id;
+    }
+
+    await registration.save();
 
     res.json(registration);
   } catch (error) {

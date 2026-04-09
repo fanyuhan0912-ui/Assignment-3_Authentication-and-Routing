@@ -168,6 +168,9 @@ function UserProfile() {
                       <span>{pet.age}</span>
                       <span>{pet.size || "Small"}</span>
                     </div>
+                    <p className="pet-adoption-text">
+                      Adopted: {pet.status === "Adopted" ? "Yes" : "No"}
+                    </p>
                     <p className="saved-pet-description">{pet.description}</p>
                     <div className="pet-list-card-footer">
                       <span className="pet-status-badge status-available">Favorite</span>

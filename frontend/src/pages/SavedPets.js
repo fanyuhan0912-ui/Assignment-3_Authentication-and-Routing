@@ -41,6 +41,9 @@ function SavedPets() {
                   <span>{pet.ageRange}</span>
                   <span>{pet.size || "Small"}</span>
                 </div>
+                <p className="pet-adoption-text">
+                  Adopted: {pet.status === "Adopted" ? "Yes" : "No"}
+                </p>
                 <p className="saved-pet-description">{pet.description}</p>
                 <div className="pet-list-card-footer">
                   <button
