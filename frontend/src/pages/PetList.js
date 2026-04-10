@@ -232,14 +232,14 @@ function PetList() {
           <div className="pet-filter-card">
             <h2>FILTER</h2>
 
-            <label className="pet-check-row">
+            {/* <label className="pet-check-row">
               <span>Available</span>
               <input
                 type="checkbox"
                 checked={availableOnly}
                 onChange={(event) => setAvailableOnly(event.target.checked)}
               />
-            </label>
+            </label> */}
 
             <label className="pet-check-row">
               <span>Vaccinated</span>

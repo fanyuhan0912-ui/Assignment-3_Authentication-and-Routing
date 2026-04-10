@@ -34,7 +34,6 @@ function createPostingForm(defaultName) {
     vaccinated: "",
     petHealthCondition: "",
     note: "",
-    idDocument: null,
     petImage: null,
   };
 }
@@ -117,7 +116,6 @@ function RegistrationForm() {
           homeAddress: postingForm.homeAddress,
           petName: postingForm.petName,
           note: postingForm.note,
-          idDocument: await fileToPayload(postingForm.idDocument),
           petImage: await fileToPayload(postingForm.petImage),
           petType: postingForm.petType,
           petBreed: postingForm.petBreed,
@@ -381,28 +379,23 @@ function RegistrationForm() {
             />
           </label>
 
-          <label className="registration-field">
-            <span>Your ID *</span>
-            <input
-              type="file"
-              accept=".pdf,.png,.jpg,.jpeg"
-              onChange={(event) =>
-                activeType === "adoption"
-                  ? setAdoptionForm((current) => ({
-                      ...current,
-                      idDocument: event.target.files?.[0] || null,
-                    }))
-                  : setPostingForm((current) => ({
-                      ...current,
-                      idDocument: event.target.files?.[0] || null,
-                    }))
-              }
-              required
-            />
-          </label>
-
           {activeType === "adoption" ? (
             <>
+              <label className="registration-field">
+                <span>Your ID *</span>
+                <input
+                  type="file"
+                  accept=".pdf,.png,.jpg,.jpeg"
+                  onChange={(event) =>
+                    setAdoptionForm((current) => ({
+                      ...current,
+                      idDocument: event.target.files?.[0] || null,
+                    }))
+                  }
+                  required
+                />
+              </label>
+
               <label className="registration-field">
                 <span>Name of the pet you wish to adopt *</span>
                 <input

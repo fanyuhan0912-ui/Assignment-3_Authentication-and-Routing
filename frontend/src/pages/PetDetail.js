@@ -191,7 +191,7 @@ function PetDetail() {
             {pet.price ? `¥${pet.price}` : "Price upon request"}
           </div>
 
-          <div
+          {/* <div
             style={{
               marginBottom: "20px",
               padding: "14px 16px",
@@ -202,7 +202,7 @@ function PetDetail() {
             }}
           >
             Adopted: {isAdopted ? "Yes" : "No"}
-          </div>
+          </div> */}
 
           {/* Detailed info list */}
           <div style={{ borderTop: "1px solid #eee", paddingTop: "20px" }}>
